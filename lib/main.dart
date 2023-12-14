@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:myweb/firebase_options.dart';
@@ -15,7 +17,11 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
   storeDb.settings = const Settings(persistenceEnabled: true);
-
+  LicenseRegistry.addLicense(() async* {
+    final license = await rootBundle.loadString('google_fonts/OFL.txt');
+    yield LicenseEntryWithLineBreaks(['google_fonts'], license);
+  });
+  GoogleFonts.config.allowRuntimeFetching = false;
   runApp(const ProviderScope(child: AppRoot()));
 }
 
