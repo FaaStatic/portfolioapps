@@ -42,7 +42,7 @@ class AppRoot extends StatelessWidget {
           ], child: child!)),
       theme: ThemeData(
         useMaterial3: false,
-        textTheme: GoogleFonts.poppinsTextTheme(),
+        fontFamily: "Poppins",
       ),
     );
   }
