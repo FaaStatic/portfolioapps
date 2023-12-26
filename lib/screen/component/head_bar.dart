@@ -2,20 +2,26 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:gap/gap.dart';
+import 'package:myweb/provider/provider_download.dart';
 import 'package:myweb/provider/provider_tab.dart';
 
 import 'package:responsive_framework/responsive_framework.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class HeadBar extends ConsumerStatefulWidget {
   final void Function() aboutCallBack;
+  final void Function() experienceCallBack;
   final void Function() projectCallBack;
-  final void Function() contactCallBack;
+  final void Function() resumeCallBack;
   final void Function() refreshCallBack;
+  final void Function(bool status) isExpanded;
   const HeadBar(
       {super.key,
       required this.refreshCallBack,
       required this.aboutCallBack,
-      required this.contactCallBack,
+      required this.experienceCallBack,
+      required this.resumeCallBack,
+      required this.isExpanded,
       required this.projectCallBack});
 
   @override
@@ -27,7 +33,8 @@ class _HeadBarState extends ConsumerState<HeadBar> with TickerProviderStateMixin
 
   bool isHover = false;
   bool isHoverProject = false;
-  bool isHoverContact = false;
+  bool isHoverExperience = false;
+  bool isHoverResume = false;
   bool isHoverAbout = false;
   bool openBottom = false;
   late Animation<double> lengthIndicator;
@@ -39,6 +46,9 @@ class _HeadBarState extends ConsumerState<HeadBar> with TickerProviderStateMixin
         Tween<double>(begin: 0, end: WidgetsBinding.instance.window.physicalSize.height * 0.15)
             .animate(CurvedAnimation(parent: _control, curve: Curves.easeIn));
     _control.forward();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      ref.read(providerDownloadData.notifier).downloadData();
+    });
     super.initState();
   }
 
@@ -46,6 +56,11 @@ class _HeadBarState extends ConsumerState<HeadBar> with TickerProviderStateMixin
   void dispose() {
     _control.dispose();
     super.dispose();
+  }
+
+  void downloadProcess() async {
+    var dataUrl = await ref.watch(providerDownloadData);
+    await launchUrl(Uri.parse(dataUrl));
   }
 
   @override
@@ -96,6 +111,7 @@ class _HeadBarState extends ConsumerState<HeadBar> with TickerProviderStateMixin
                             setState(() {
                               openBottom = !openBottom;
                             });
+                            widget.isExpanded(openBottom);
                           },
                           child: AnimatedContainer(
                               duration: const Duration(milliseconds: 200),
@@ -121,7 +137,7 @@ class _HeadBarState extends ConsumerState<HeadBar> with TickerProviderStateMixin
                       );
                     } else {
                       return SizedBox(
-                        width: MediaQuery.of(context).size.width * 0.45,
+                        width: MediaQuery.of(context).size.width * 0.55,
                         height: MediaQuery.of(context).size.height * 0.15,
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -193,19 +209,19 @@ class _HeadBarState extends ConsumerState<HeadBar> with TickerProviderStateMixin
                             MouseRegion(
                               onHover: (value) {
                                 setState(() {
-                                  isHoverProject = true;
+                                  isHoverExperience = true;
                                 });
                               },
                               onExit: (event) {
                                 setState(() {
-                                  isHoverProject = false;
+                                  isHoverExperience = false;
                                 });
                               },
                               child: InkWell(
                                 onTap: () {
                                   _control.reset();
                                   _control.forward();
-                                  widget.projectCallBack();
+                                  widget.experienceCallBack();
                                 },
                                 child: AnimatedContainer(
                                   duration: const Duration(milliseconds: 200),
@@ -214,15 +230,16 @@ class _HeadBarState extends ConsumerState<HeadBar> with TickerProviderStateMixin
                                     crossAxisAlignment: CrossAxisAlignment.center,
                                     children: [
                                       Text(
-                                        "Project",
+                                        "Experience",
                                         style: TextStyle(
-                                            color: isHoverAbout
+                                            color: isHoverExperience
                                                 ? Colors.blue.shade800
                                                 : ref.watch(providerChangeTab) == 1
                                                     ? Colors.blue
                                                     : Colors.blue.shade300,
-                                            fontWeight:
-                                                isHoverAbout ? FontWeight.w700 : FontWeight.w400,
+                                            fontWeight: isHoverExperience
+                                                ? FontWeight.w700
+                                                : FontWeight.w400,
                                             fontSize: 16),
                                       ),
                                       const Gap(8),
@@ -257,19 +274,19 @@ class _HeadBarState extends ConsumerState<HeadBar> with TickerProviderStateMixin
                             MouseRegion(
                               onHover: (value) {
                                 setState(() {
-                                  isHoverContact = true;
+                                  isHoverProject = true;
                                 });
                               },
                               onExit: (event) {
                                 setState(() {
-                                  isHoverContact = false;
+                                  isHoverProject = false;
                                 });
                               },
                               child: InkWell(
                                 onTap: () {
                                   _control.reset();
                                   _control.forward();
-                                  widget.contactCallBack();
+                                  widget.projectCallBack();
                                 },
                                 child: AnimatedContainer(
                                   duration: const Duration(milliseconds: 200),
@@ -278,15 +295,15 @@ class _HeadBarState extends ConsumerState<HeadBar> with TickerProviderStateMixin
                                     crossAxisAlignment: CrossAxisAlignment.center,
                                     children: [
                                       Text(
-                                        "Contact",
+                                        "Project",
                                         style: TextStyle(
-                                            color: isHoverAbout
+                                            color: isHoverProject
                                                 ? Colors.blue.shade800
                                                 : ref.watch(providerChangeTab) == 2
                                                     ? Colors.blue
                                                     : Colors.blue.shade300,
                                             fontWeight:
-                                                isHoverAbout ? FontWeight.w700 : FontWeight.w400,
+                                                isHoverProject ? FontWeight.w700 : FontWeight.w400,
                                             fontSize: 16),
                                       ),
                                       const Gap(8),
@@ -316,6 +333,45 @@ class _HeadBarState extends ConsumerState<HeadBar> with TickerProviderStateMixin
                                     ],
                                   ),
                                 ),
+                              ),
+                            ),
+                            MouseRegion(
+                              onHover: (value) {
+                                setState(() {
+                                  isHoverResume = true;
+                                });
+                              },
+                              onExit: (event) {
+                                setState(() {
+                                  isHoverResume = false;
+                                });
+                              },
+                              child: InkWell(
+                                onTap: () {
+                                  downloadProcess();
+                                  widget.resumeCallBack();
+                                },
+                                child: AnimatedContainer(
+                                    height: 52,
+                                    duration: const Duration(milliseconds: 200),
+                                    padding: const EdgeInsets.only(left: 16, right: 16),
+                                    decoration: BoxDecoration(
+                                        borderRadius: const BorderRadius.all(Radius.circular(30)),
+                                        color: isHoverResume ? Colors.blue : Colors.white,
+                                        border: Border.all(
+                                          width: 1,
+                                          color: isHoverResume ? Colors.white : Colors.blue,
+                                        )),
+                                    child: Center(
+                                        child: Text(
+                                      "Resume",
+                                      style: TextStyle(
+                                          color:
+                                              isHoverResume ? Colors.white : Colors.blue.shade300,
+                                          fontWeight:
+                                              isHoverResume ? FontWeight.w700 : FontWeight.w400,
+                                          fontSize: 16),
+                                    ))),
                               ),
                             ),
                           ],
@@ -353,6 +409,7 @@ class _HeadBarState extends ConsumerState<HeadBar> with TickerProviderStateMixin
                               openBottom = false;
                             });
                             widget.aboutCallBack();
+                            widget.isExpanded(openBottom);
                           },
                           child: AnimatedContainer(
                             duration: const Duration(milliseconds: 200),
@@ -361,6 +418,39 @@ class _HeadBarState extends ConsumerState<HeadBar> with TickerProviderStateMixin
                               style: TextStyle(
                                   color: isHoverAbout ? Colors.blue.shade800 : Colors.blue.shade300,
                                   fontWeight: isHoverAbout ? FontWeight.w700 : FontWeight.w400,
+                                  fontSize: 16),
+                            ),
+                          ),
+                        ),
+                      ),
+                      MouseRegion(
+                        onHover: (value) {
+                          setState(() {
+                            isHoverExperience = true;
+                          });
+                        },
+                        onExit: (event) {
+                          setState(() {
+                            isHoverExperience = false;
+                          });
+                        },
+                        child: InkWell(
+                          onTap: () {
+                            setState(() {
+                              openBottom = false;
+                            });
+                            widget.experienceCallBack();
+                            widget.isExpanded(openBottom);
+                          },
+                          child: AnimatedContainer(
+                            duration: const Duration(milliseconds: 200),
+                            child: Text(
+                              "Experience",
+                              style: TextStyle(
+                                  color: isHoverExperience
+                                      ? Colors.blue.shade800
+                                      : Colors.blue.shade300,
+                                  fontWeight: isHoverExperience ? FontWeight.w700 : FontWeight.w400,
                                   fontSize: 16),
                             ),
                           ),
@@ -383,6 +473,7 @@ class _HeadBarState extends ConsumerState<HeadBar> with TickerProviderStateMixin
                               openBottom = false;
                             });
                             widget.projectCallBack();
+                            widget.isExpanded(openBottom);
                           },
                           child: AnimatedContainer(
                               duration: const Duration(milliseconds: 200),
@@ -400,12 +491,12 @@ class _HeadBarState extends ConsumerState<HeadBar> with TickerProviderStateMixin
                       MouseRegion(
                         onHover: (value) {
                           setState(() {
-                            isHoverContact = true;
+                            isHoverResume = true;
                           });
                         },
                         onExit: (event) {
                           setState(() {
-                            isHoverContact = false;
+                            isHoverResume = false;
                           });
                         },
                         child: InkWell(
@@ -413,20 +504,29 @@ class _HeadBarState extends ConsumerState<HeadBar> with TickerProviderStateMixin
                             setState(() {
                               openBottom = false;
                             });
-
-                            widget.contactCallBack();
+                            downloadProcess();
+                            widget.resumeCallBack();
+                            widget.isExpanded(openBottom);
                           },
                           child: AnimatedContainer(
-                            duration: const Duration(milliseconds: 200),
-                            child: Text(
-                              "Contact",
-                              style: TextStyle(
-                                  color:
-                                      isHoverContact ? Colors.blue.shade800 : Colors.blue.shade300,
-                                  fontWeight: isHoverContact ? FontWeight.w700 : FontWeight.w400,
-                                  fontSize: 16),
-                            ),
-                          ),
+                              width: 250,
+                              height: 52,
+                              duration: const Duration(milliseconds: 200),
+                              decoration: BoxDecoration(
+                                  borderRadius: const BorderRadius.all(Radius.circular(30)),
+                                  color: isHoverResume ? Colors.blue : Colors.white,
+                                  border: Border.all(
+                                    width: 1,
+                                    color: isHoverResume ? Colors.white : Colors.blue,
+                                  )),
+                              child: Center(
+                                  child: Text(
+                                "Resume",
+                                style: TextStyle(
+                                    color: isHoverResume ? Colors.white : Colors.blue.shade300,
+                                    fontWeight: isHoverResume ? FontWeight.w700 : FontWeight.w400,
+                                    fontSize: 16),
+                              ))),
                         ),
                       ),
                     ],
@@ -435,7 +535,7 @@ class _HeadBarState extends ConsumerState<HeadBar> with TickerProviderStateMixin
               } else {
                 return const SizedBox();
               }
-            })
+            }),
           ],
         ));
   }
