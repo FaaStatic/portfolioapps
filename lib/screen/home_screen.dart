@@ -67,7 +67,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> with TickerProviderStat
                     forceMaterialTransparency: true,
                     backgroundColor: Colors.transparent,
                     collapsedHeight: expandedHight
-                        ? Util().autoSizing(context, stat: 2, percent: 0.45)
+                        ? Util().autoSizing(context, stat: 2, percent: 0.5)
                         : Util().autoSizing(context, stat: 2, percent: 0.15),
                     flexibleSpace: HeadBar(
                         refreshCallBack: () {},

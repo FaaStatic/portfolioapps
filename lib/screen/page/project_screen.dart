@@ -35,8 +35,7 @@ class _ProjectScreenState extends ConsumerState<ProjectScreen> {
     const ContactModel(
         title: "Whatsapp",
         iconLink: "assets/images/ic_wa.svg",
-        link:
-            "https://wa.me/085713561437/?text=I want collaborate with you ..."),
+        link: "https://wa.me/085713561437/?text=I want collaborate with you ..."),
     const ContactModel(
         title: "Telegram",
         iconLink: "assets/images/ic_tele.svg",
@@ -74,15 +73,13 @@ class _ProjectScreenState extends ConsumerState<ProjectScreen> {
         controller: _controller,
         shrinkWrap: true,
         physics: const NeverScrollableScrollPhysics(),
-        padding:
-            EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.15),
+        padding: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.15),
         children: [
           const Gap(24),
           Container(
             height: 80,
             width: 80,
-            decoration:
-                const BoxDecoration(shape: BoxShape.circle, color: Colors.blue),
+            decoration: const BoxDecoration(shape: BoxShape.circle, color: Colors.blue),
             child: Center(
               child: SvgPicture.asset(
                 "assets/images/ic_project.svg",
@@ -97,10 +94,7 @@ class _ProjectScreenState extends ConsumerState<ProjectScreen> {
             alignment: Alignment.center,
             child: Text(
               "Recent Work",
-              style: TextStyle(
-                  fontSize: 14,
-                  fontWeight: FontWeight.w600,
-                  color: Colors.black),
+              style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600, color: Colors.black),
             ),
           ),
           const Gap(8),
@@ -108,10 +102,7 @@ class _ProjectScreenState extends ConsumerState<ProjectScreen> {
               alignment: Alignment.center,
               child: Text(
                 "Here are the list project while i working on programming job: ",
-                style: TextStyle(
-                    fontSize: 12,
-                    fontWeight: FontWeight.w600,
-                    color: Colors.black),
+                style: TextStyle(fontSize: 12, fontWeight: FontWeight.w600, color: Colors.black),
                 textAlign: TextAlign.left,
               )),
           const Gap(16),
@@ -147,10 +138,7 @@ class _ProjectScreenState extends ConsumerState<ProjectScreen> {
                 height: Util().autoSizing(context, stat: 2),
                 child: Center(
                   child: Lottie.asset("assets/images/anim_loading.json",
-                      repeat: true,
-                      frameRate: FrameRate.composition,
-                      width: 150,
-                      height: 150),
+                      repeat: true, frameRate: FrameRate.composition, width: 150, height: 150),
                 ),
               );
             }
@@ -158,22 +146,22 @@ class _ProjectScreenState extends ConsumerState<ProjectScreen> {
           const Gap(28),
           Container(
             width: widthScreen,
-            height: 300,
             color: Colors.blue.shade600,
+            padding: const EdgeInsets.all(25),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisSize: MainAxisSize.min,
               children: [
-                const Text(
+                const Flexible(
+                    child: Text(
                   "Want to collaborate together, contact me at:",
                   textAlign: TextAlign.center,
-                  style: TextStyle(
-                      fontSize: 24,
-                      color: Colors.white,
-                      fontWeight: FontWeight.w600),
-                ),
+                  style: TextStyle(fontSize: 24, color: Colors.white, fontWeight: FontWeight.w600),
+                )),
                 const Gap(16),
-                Wrap(
+                Flexible(
+                    child: Wrap(
                   runSpacing: 20,
                   spacing: 10,
                   children: [
@@ -190,33 +178,28 @@ class _ProjectScreenState extends ConsumerState<ProjectScreen> {
                                 'body': "Hi Faruq ..."
                               },
                             );
-                            await launchUrl(emailLaunchUri,
-                                mode: LaunchMode.platformDefault);
+                            await launchUrl(emailLaunchUri, mode: LaunchMode.platformDefault);
                           } else {
-                            await launchUrl(Uri.parse(item.link),
-                                mode: LaunchMode.platformDefault);
+                            await launchUrl(Uri.parse(item.link), mode: LaunchMode.platformDefault);
                           }
                         }))
                   ],
-                ),
+                )),
                 const Gap(24),
-                const Text(
+                const Flexible(
+                    child: Text(
                   "Handcraft by me@suhailifaruq_",
-                  style: TextStyle(
-                      fontSize: 14,
-                      color: Colors.white,
-                      fontWeight: FontWeight.w600),
-                ),
+                  style: TextStyle(fontSize: 14, color: Colors.white, fontWeight: FontWeight.w600),
+                )),
                 const Gap(8),
-                const Text(
-                  "Logo generated by Microsoft Image Create powered by DALL-E3",
-                  style: TextStyle(
-                      fontSize: 12,
-                      color: Colors.white,
-                      fontWeight: FontWeight.w400),
-                ),
+                const Flexible(
+                    child: Text(
+                  "Logo generated by Microsoft Image Create powered by DALL-E 3",
+                  style: TextStyle(fontSize: 8, color: Colors.white, fontWeight: FontWeight.w400),
+                )),
                 const Gap(8),
-                SizedBox(
+                Flexible(
+                    child: SizedBox(
                   width: widthScreen * 0.25,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -231,13 +214,11 @@ class _ProjectScreenState extends ConsumerState<ProjectScreen> {
                       const Text(
                         "Web build by Flutter",
                         style: TextStyle(
-                            fontSize: 12,
-                            color: Colors.white,
-                            fontWeight: FontWeight.w400),
+                            fontSize: 12, color: Colors.white, fontWeight: FontWeight.w400),
                       ),
                     ],
                   ),
-                ),
+                )),
               ],
             ),
           )
