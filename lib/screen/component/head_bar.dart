@@ -28,7 +28,8 @@ class HeadBar extends ConsumerStatefulWidget {
   ConsumerState<ConsumerStatefulWidget> createState() => _HeadBarState();
 }
 
-class _HeadBarState extends ConsumerState<HeadBar> with TickerProviderStateMixin {
+class _HeadBarState extends ConsumerState<HeadBar>
+    with TickerProviderStateMixin {
   late AnimationController _control;
 
   bool isHover = false;
@@ -41,10 +42,12 @@ class _HeadBarState extends ConsumerState<HeadBar> with TickerProviderStateMixin
 
   @override
   void initState() {
-    _control = AnimationController(vsync: this, duration: const Duration(milliseconds: 500));
-    lengthIndicator =
-        Tween<double>(begin: 0, end: WidgetsBinding.instance.window.physicalSize.height * 0.15)
-            .animate(CurvedAnimation(parent: _control, curve: Curves.easeIn));
+    _control = AnimationController(
+        vsync: this, duration: const Duration(milliseconds: 500));
+    lengthIndicator = Tween<double>(
+            begin: 0,
+            end: WidgetsBinding.instance.window.physicalSize.height * 0.15)
+        .animate(CurvedAnimation(parent: _control, curve: Curves.easeIn));
     _control.forward();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       ref.read(providerDownloadData.notifier).downloadData();
@@ -70,14 +73,14 @@ class _HeadBarState extends ConsumerState<HeadBar> with TickerProviderStateMixin
         width: MediaQuery.of(context).size.width,
         color: Colors.transparent,
         constraints: BoxConstraints(
-            minHeight: MediaQuery.of(context).size.height * 0.15,
-            maxHeight: MediaQuery.of(context).size.height * 0.45),
+            minHeight: MediaQuery.of(context).size.height * 0.10,
+            maxHeight: MediaQuery.of(context).size.height * 0.35),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Container(
               width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.height * 0.15,
+              height: MediaQuery.of(context).size.height * 0.10,
               color: Colors.white,
               padding: const EdgeInsets.all(16),
               child: Row(
@@ -89,7 +92,9 @@ class _HeadBarState extends ConsumerState<HeadBar> with TickerProviderStateMixin
                     child: Text(
                       "Suhaili Faruq",
                       style: TextStyle(
-                          fontSize: 20, color: Colors.blue.shade400, fontWeight: FontWeight.w700),
+                          fontSize: 20,
+                          color: Colors.blue.shade400,
+                          fontWeight: FontWeight.w700),
                     ),
                   ),
                   Builder(builder: (context) {
@@ -121,7 +126,9 @@ class _HeadBarState extends ConsumerState<HeadBar> with TickerProviderStateMixin
                                 if (openBottom) {
                                   return Icon(
                                     Icons.close,
-                                    color: isHover ? Colors.blue : Colors.blue.shade300,
+                                    color: isHover
+                                        ? Colors.blue
+                                        : Colors.blue.shade300,
                                     size: 35,
                                   );
                                 } else {
@@ -129,7 +136,9 @@ class _HeadBarState extends ConsumerState<HeadBar> with TickerProviderStateMixin
                                     "assets/images/ic_menu.svg",
                                     width: 24,
                                     height: 24,
-                                    color: isHover ? Colors.blue : Colors.blue.shade300,
+                                    color: isHover
+                                        ? Colors.blue
+                                        : Colors.blue.shade300,
                                   );
                                 }
                               })),
@@ -138,7 +147,7 @@ class _HeadBarState extends ConsumerState<HeadBar> with TickerProviderStateMixin
                     } else {
                       return SizedBox(
                         width: MediaQuery.of(context).size.width * 0.55,
-                        height: MediaQuery.of(context).size.height * 0.15,
+                        height: MediaQuery.of(context).size.height * 0.10,
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
@@ -163,18 +172,21 @@ class _HeadBarState extends ConsumerState<HeadBar> with TickerProviderStateMixin
                                   duration: const Duration(milliseconds: 200),
                                   child: Column(
                                     mainAxisAlignment: MainAxisAlignment.center,
-                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
                                     children: [
                                       Text(
                                         "About",
                                         style: TextStyle(
                                             color: isHoverAbout
                                                 ? Colors.blue.shade800
-                                                : ref.watch(providerChangeTab) == 0
+                                                : ref.watch(providerChangeTab) ==
+                                                        0
                                                     ? Colors.blue
                                                     : Colors.blue.shade300,
-                                            fontWeight:
-                                                isHoverAbout ? FontWeight.w700 : FontWeight.w400,
+                                            fontWeight: isHoverAbout
+                                                ? FontWeight.w700
+                                                : FontWeight.w400,
                                             fontSize: 16),
                                       ),
                                       const Gap(8),
@@ -189,11 +201,14 @@ class _HeadBarState extends ConsumerState<HeadBar> with TickerProviderStateMixin
                                                   sizeFactor: _control,
                                                   child: Container(
                                                     height: 2,
-                                                    width: lengthIndicator.value,
+                                                    width:
+                                                        lengthIndicator.value,
                                                     decoration: const BoxDecoration(
                                                         color: Colors.blue,
                                                         borderRadius:
-                                                            BorderRadius.all(Radius.circular(10))),
+                                                            BorderRadius.all(
+                                                                Radius.circular(
+                                                                    10))),
                                                   ),
                                                 );
                                               });
@@ -227,14 +242,16 @@ class _HeadBarState extends ConsumerState<HeadBar> with TickerProviderStateMixin
                                   duration: const Duration(milliseconds: 200),
                                   child: Column(
                                     mainAxisAlignment: MainAxisAlignment.center,
-                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
                                     children: [
                                       Text(
                                         "Experience",
                                         style: TextStyle(
                                             color: isHoverExperience
                                                 ? Colors.blue.shade800
-                                                : ref.watch(providerChangeTab) == 1
+                                                : ref.watch(providerChangeTab) ==
+                                                        1
                                                     ? Colors.blue
                                                     : Colors.blue.shade300,
                                             fontWeight: isHoverExperience
@@ -254,11 +271,14 @@ class _HeadBarState extends ConsumerState<HeadBar> with TickerProviderStateMixin
                                                   sizeFactor: _control,
                                                   child: Container(
                                                     height: 2,
-                                                    width: lengthIndicator.value,
+                                                    width:
+                                                        lengthIndicator.value,
                                                     decoration: const BoxDecoration(
                                                         color: Colors.blue,
                                                         borderRadius:
-                                                            BorderRadius.all(Radius.circular(10))),
+                                                            BorderRadius.all(
+                                                                Radius.circular(
+                                                                    10))),
                                                   ),
                                                 );
                                               });
@@ -292,18 +312,21 @@ class _HeadBarState extends ConsumerState<HeadBar> with TickerProviderStateMixin
                                   duration: const Duration(milliseconds: 200),
                                   child: Column(
                                     mainAxisAlignment: MainAxisAlignment.center,
-                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
                                     children: [
                                       Text(
                                         "Project",
                                         style: TextStyle(
                                             color: isHoverProject
                                                 ? Colors.blue.shade800
-                                                : ref.watch(providerChangeTab) == 2
+                                                : ref.watch(providerChangeTab) ==
+                                                        2
                                                     ? Colors.blue
                                                     : Colors.blue.shade300,
-                                            fontWeight:
-                                                isHoverProject ? FontWeight.w700 : FontWeight.w400,
+                                            fontWeight: isHoverProject
+                                                ? FontWeight.w700
+                                                : FontWeight.w400,
                                             fontSize: 16),
                                       ),
                                       const Gap(8),
@@ -318,11 +341,14 @@ class _HeadBarState extends ConsumerState<HeadBar> with TickerProviderStateMixin
                                                   sizeFactor: _control,
                                                   child: Container(
                                                     height: 2,
-                                                    width: lengthIndicator.value,
+                                                    width:
+                                                        lengthIndicator.value,
                                                     decoration: const BoxDecoration(
                                                         color: Colors.blue,
                                                         borderRadius:
-                                                            BorderRadius.all(Radius.circular(10))),
+                                                            BorderRadius.all(
+                                                                Radius.circular(
+                                                                    10))),
                                                   ),
                                                 );
                                               });
@@ -354,22 +380,30 @@ class _HeadBarState extends ConsumerState<HeadBar> with TickerProviderStateMixin
                                 child: AnimatedContainer(
                                     height: 52,
                                     duration: const Duration(milliseconds: 200),
-                                    padding: const EdgeInsets.only(left: 16, right: 16),
+                                    padding: const EdgeInsets.only(
+                                        left: 16, right: 16),
                                     decoration: BoxDecoration(
-                                        borderRadius: const BorderRadius.all(Radius.circular(30)),
-                                        color: isHoverResume ? Colors.blue : Colors.white,
+                                        borderRadius: const BorderRadius.all(
+                                            Radius.circular(30)),
+                                        color: isHoverResume
+                                            ? Colors.blue
+                                            : Colors.white,
                                         border: Border.all(
                                           width: 1,
-                                          color: isHoverResume ? Colors.white : Colors.blue,
+                                          color: isHoverResume
+                                              ? Colors.white
+                                              : Colors.blue,
                                         )),
                                     child: Center(
                                         child: Text(
                                       "Resume",
                                       style: TextStyle(
-                                          color:
-                                              isHoverResume ? Colors.white : Colors.blue.shade300,
-                                          fontWeight:
-                                              isHoverResume ? FontWeight.w700 : FontWeight.w400,
+                                          color: isHoverResume
+                                              ? Colors.white
+                                              : Colors.blue.shade300,
+                                          fontWeight: isHoverResume
+                                              ? FontWeight.w700
+                                              : FontWeight.w400,
                                           fontSize: 16),
                                     ))),
                               ),
@@ -386,7 +420,7 @@ class _HeadBarState extends ConsumerState<HeadBar> with TickerProviderStateMixin
               if (openBottom) {
                 return Container(
                   width: MediaQuery.of(context).size.width,
-                  height: MediaQuery.of(context).size.height * 0.3,
+                  height: MediaQuery.of(context).size.height * 0.25,
                   color: Colors.white,
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -416,8 +450,12 @@ class _HeadBarState extends ConsumerState<HeadBar> with TickerProviderStateMixin
                             child: Text(
                               "About",
                               style: TextStyle(
-                                  color: isHoverAbout ? Colors.blue.shade800 : Colors.blue.shade300,
-                                  fontWeight: isHoverAbout ? FontWeight.w700 : FontWeight.w400,
+                                  color: isHoverAbout
+                                      ? Colors.blue.shade800
+                                      : Colors.blue.shade300,
+                                  fontWeight: isHoverAbout
+                                      ? FontWeight.w700
+                                      : FontWeight.w400,
                                   fontSize: 16),
                             ),
                           ),
@@ -450,7 +488,9 @@ class _HeadBarState extends ConsumerState<HeadBar> with TickerProviderStateMixin
                                   color: isHoverExperience
                                       ? Colors.blue.shade800
                                       : Colors.blue.shade300,
-                                  fontWeight: isHoverExperience ? FontWeight.w700 : FontWeight.w400,
+                                  fontWeight: isHoverExperience
+                                      ? FontWeight.w700
+                                      : FontWeight.w400,
                                   fontSize: 16),
                             ),
                           ),
@@ -483,7 +523,9 @@ class _HeadBarState extends ConsumerState<HeadBar> with TickerProviderStateMixin
                                     color: isHoverProject
                                         ? Colors.blue.shade800
                                         : Colors.blue.shade300,
-                                    fontWeight: isHoverProject ? FontWeight.w700 : FontWeight.w400,
+                                    fontWeight: isHoverProject
+                                        ? FontWeight.w700
+                                        : FontWeight.w400,
                                     fontSize: 16),
                               )),
                         ),
@@ -513,18 +555,27 @@ class _HeadBarState extends ConsumerState<HeadBar> with TickerProviderStateMixin
                               height: 52,
                               duration: const Duration(milliseconds: 200),
                               decoration: BoxDecoration(
-                                  borderRadius: const BorderRadius.all(Radius.circular(30)),
-                                  color: isHoverResume ? Colors.blue : Colors.white,
+                                  borderRadius: const BorderRadius.all(
+                                      Radius.circular(30)),
+                                  color: isHoverResume
+                                      ? Colors.blue
+                                      : Colors.white,
                                   border: Border.all(
                                     width: 1,
-                                    color: isHoverResume ? Colors.white : Colors.blue,
+                                    color: isHoverResume
+                                        ? Colors.white
+                                        : Colors.blue,
                                   )),
                               child: Center(
                                   child: Text(
                                 "Resume",
                                 style: TextStyle(
-                                    color: isHoverResume ? Colors.white : Colors.blue.shade300,
-                                    fontWeight: isHoverResume ? FontWeight.w700 : FontWeight.w400,
+                                    color: isHoverResume
+                                        ? Colors.white
+                                        : Colors.blue.shade300,
+                                    fontWeight: isHoverResume
+                                        ? FontWeight.w700
+                                        : FontWeight.w400,
                                     fontSize: 16),
                               ))),
                         ),
