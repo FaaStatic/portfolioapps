@@ -1,11 +1,11 @@
 {
-    "name": "myweb",
-    "short_name": "myweb",
+    "name": "Suhaili Portfolio",
+    "short_name": "Suhaili Portfolio",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
     "theme_color": "#0175C2",
-    "description": "A new Flutter project.",
+    "description": "its website suhaili portfolio to show project and experience suhaili while do the job.",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [

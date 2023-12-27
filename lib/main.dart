@@ -17,6 +17,7 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
   storeDb.settings = const Settings(persistenceEnabled: true);
+
   LicenseRegistry.addLicense(() async* {
     final license = await rootBundle.loadString('google_fonts/OFL.txt');
     yield LicenseEntryWithLineBreaks(['google_fonts'], license);
@@ -34,6 +35,7 @@ class AppRoot extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp.router(
       routerConfig: RouteManager().router,
+      title: "Suhaili Portfolio",
       scaffoldMessengerKey: keyScaffold,
       builder: ((context, child) => ResponsiveBreakpoints.builder(breakpoints: [
             const Breakpoint(start: 0, end: 450, name: MOBILE),
