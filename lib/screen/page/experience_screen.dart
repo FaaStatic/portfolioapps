@@ -12,7 +12,8 @@ class ExperienceScreen extends ConsumerStatefulWidget {
   const ExperienceScreen({super.key});
 
   @override
-  ConsumerState<ConsumerStatefulWidget> createState() => _ExperienceScreenState();
+  ConsumerState<ConsumerStatefulWidget> createState() =>
+      _ExperienceScreenState();
 }
 
 class _ExperienceScreenState extends ConsumerState<ExperienceScreen> {
@@ -41,14 +42,14 @@ class _ExperienceScreenState extends ConsumerState<ExperienceScreen> {
         controller: _controller,
         physics: const NeverScrollableScrollPhysics(),
         shrinkWrap: true,
-        padding:
-            EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.15, left: 28, right: 28),
+        padding: const EdgeInsets.only(top: 28, left: 28, right: 28),
         children: [
           const Gap(24),
           Container(
             height: 80,
             width: 80,
-            decoration: const BoxDecoration(shape: BoxShape.circle, color: Colors.blue),
+            decoration:
+                const BoxDecoration(shape: BoxShape.circle, color: Colors.blue),
             child: Center(
               child: SvgPicture.asset(
                 "assets/images/ic_koper.svg",
@@ -63,7 +64,10 @@ class _ExperienceScreenState extends ConsumerState<ExperienceScreen> {
             alignment: Alignment.center,
             child: Text(
               "Experience Work",
-              style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600, color: Colors.black),
+              style: TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.w600,
+                  color: Colors.black),
             ),
           ),
           const Gap(8),
@@ -71,12 +75,17 @@ class _ExperienceScreenState extends ConsumerState<ExperienceScreen> {
               alignment: Alignment.center,
               child: Text(
                 "Here are the experiences I have gone through in this job",
-                style: TextStyle(fontSize: 12, fontWeight: FontWeight.w600, color: Colors.black),
+                style: TextStyle(
+                    fontSize: 12,
+                    fontWeight: FontWeight.w600,
+                    color: Colors.black),
                 textAlign: TextAlign.left,
               )),
           const Gap(16),
           Container(
-              width: Util().autoSizing(context, stat: 1), height: 1, color: Colors.blue.shade600),
+              width: Util().autoSizing(context, stat: 1),
+              height: 1,
+              color: Colors.blue.shade600),
           const Gap(24),
           Consumer(builder: (context, ref, _) {
             var response = ref.watch(providerWorkingGet);
@@ -95,7 +104,10 @@ class _ExperienceScreenState extends ConsumerState<ExperienceScreen> {
                 height: Util().autoSizing(context, stat: 2),
                 child: Center(
                   child: Lottie.asset("assets/images/anim_loading.json",
-                      repeat: true, frameRate: FrameRate.composition, width: 150, height: 150),
+                      repeat: true,
+                      frameRate: FrameRate.composition,
+                      width: 150,
+                      height: 150),
                 ),
               );
             }

@@ -43,7 +43,7 @@ class _AboutScreenState extends ConsumerState<AboutScreen> {
           Container(
             constraints: BoxConstraints.expand(
                 width: Util().autoSizing(context, stat: 1),
-                height: Util().autoSizing(context, stat: 2)),
+                height: Util().autoSizing(context, stat: 2, percent: 0.75)),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -51,7 +51,9 @@ class _AboutScreenState extends ConsumerState<AboutScreen> {
                   TextSpan(
                       text: "Mobile an",
                       style: const TextStyle(
-                          fontSize: 40, color: Colors.blue, fontWeight: FontWeight.w700),
+                          fontSize: 40,
+                          color: Colors.blue,
+                          fontWeight: FontWeight.w700),
                       children: [
                         TextSpan(
                             text: "d Web Developer",
@@ -65,10 +67,11 @@ class _AboutScreenState extends ConsumerState<AboutScreen> {
                 const Gap(8),
                 Text(
                   "I develop mobile and web application with modern framework for your business.",
-                  style: TextStyle(fontSize: 16, color: Colors.blueAccent.shade700),
+                  style: TextStyle(
+                      fontSize: 16, color: Colors.blueAccent.shade700),
                   textAlign: TextAlign.center,
                 ),
-                Gap(MediaQuery.of(context).size.height * 0.15),
+                Gap(MediaQuery.of(context).size.height * 0.10),
                 Container(
                   width: 150,
                   height: 150,
@@ -83,17 +86,17 @@ class _AboutScreenState extends ConsumerState<AboutScreen> {
               ],
             ),
           ),
-          Gap(Util().autoSizing(context, stat: 2, percent: 0.1)),
+          const Gap(36),
           Container(
             width: Util().autoSizing(context, stat: 1, percent: 0.8),
-            padding: const EdgeInsets.only(left: 28, right: 28),
+            padding: const EdgeInsets.all(36),
             decoration: BoxDecoration(
               color: Colors.blue.shade900,
               borderRadius: const BorderRadius.all(Radius.circular(10)),
             ),
             child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
-                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   const Gap(16),
                   const Align(
@@ -101,8 +104,10 @@ class _AboutScreenState extends ConsumerState<AboutScreen> {
                     child: Text(
                       "Hi i'm Faruq welcome to my website portfolio.",
                       textAlign: TextAlign.center,
-                      style:
-                          TextStyle(fontSize: 25, color: Colors.white, fontWeight: FontWeight.w700),
+                      style: TextStyle(
+                          fontSize: 25,
+                          color: Colors.white,
+                          fontWeight: FontWeight.w700),
                     ),
                   ),
                   const Gap(28),
@@ -126,11 +131,12 @@ class _AboutScreenState extends ConsumerState<AboutScreen> {
                   const Gap(16),
                 ]),
           ),
-          const Gap(24),
+          const Gap(36),
           Container(
             height: 80,
             width: 80,
-            decoration: const BoxDecoration(shape: BoxShape.circle, color: Colors.blue),
+            decoration:
+                const BoxDecoration(shape: BoxShape.circle, color: Colors.blue),
             child: Center(
               child: SvgPicture.asset(
                 "assets/images/ic_code.svg",
@@ -145,7 +151,10 @@ class _AboutScreenState extends ConsumerState<AboutScreen> {
             alignment: Alignment.center,
             child: Text(
               "Main Skills",
-              style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600, color: Colors.black),
+              style: TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.w600,
+                  color: Colors.black),
             ),
           ),
           const Gap(8),
@@ -153,18 +162,26 @@ class _AboutScreenState extends ConsumerState<AboutScreen> {
               alignment: Alignment.center,
               child: Text(
                 "From scratch, i code and build something then ensure run to mobile and browser",
-                style: TextStyle(fontSize: 12, fontWeight: FontWeight.w600, color: Colors.black),
+                style: TextStyle(
+                    fontSize: 12,
+                    fontWeight: FontWeight.w600,
+                    color: Colors.black),
                 textAlign: TextAlign.left,
               )),
           const Gap(16),
           Container(
-              width: Util().autoSizing(context, stat: 1), height: 1, color: Colors.blue.shade600),
+              width: Util().autoSizing(context, stat: 1),
+              height: 1,
+              color: Colors.blue.shade600),
           const Gap(24),
           const Align(
             alignment: Alignment.centerLeft,
             child: Text(
               "I Like Code with Languange:",
-              style: TextStyle(fontSize: 14, fontWeight: FontWeight.w700, color: Colors.black),
+              style: TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.w700,
+                  color: Colors.black),
             ),
           ),
           const Gap(16),
@@ -188,7 +205,9 @@ class _AboutScreenState extends ConsumerState<AboutScreen> {
                         const Text(
                           "Dart Languange",
                           style: TextStyle(
-                              fontSize: 12, fontWeight: FontWeight.w400, color: Colors.black),
+                              fontSize: 12,
+                              fontWeight: FontWeight.w400,
+                              color: Colors.black),
                         )
                       ],
                     ),
@@ -237,7 +256,9 @@ class _AboutScreenState extends ConsumerState<AboutScreen> {
                         const Text(
                           "Kotlin Languange",
                           style: TextStyle(
-                              fontSize: 12, fontWeight: FontWeight.w400, color: Colors.black),
+                              fontSize: 12,
+                              fontWeight: FontWeight.w400,
+                              color: Colors.black),
                         )
                       ],
                     ),
@@ -256,7 +277,9 @@ class _AboutScreenState extends ConsumerState<AboutScreen> {
                         const Text(
                           "Java Languange",
                           style: TextStyle(
-                              fontSize: 12, fontWeight: FontWeight.w400, color: Colors.black),
+                              fontSize: 12,
+                              fontWeight: FontWeight.w400,
+                              color: Colors.black),
                         )
                       ],
                     ),
@@ -268,7 +291,10 @@ class _AboutScreenState extends ConsumerState<AboutScreen> {
             alignment: Alignment.centerLeft,
             child: Text(
               "And using modern framework like:",
-              style: TextStyle(fontSize: 14, fontWeight: FontWeight.w700, color: Colors.black),
+              style: TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.w700,
+                  color: Colors.black),
             ),
           ),
           const Gap(16),
@@ -292,7 +318,9 @@ class _AboutScreenState extends ConsumerState<AboutScreen> {
                         const Text(
                           "Flutter",
                           style: TextStyle(
-                              fontSize: 12, fontWeight: FontWeight.w400, color: Colors.black),
+                              fontSize: 12,
+                              fontWeight: FontWeight.w400,
+                              color: Colors.black),
                         )
                       ],
                     ),
@@ -314,7 +342,9 @@ class _AboutScreenState extends ConsumerState<AboutScreen> {
                             child: Text(
                               "Android Jetpack Compose",
                               style: TextStyle(
-                                  fontSize: 12, fontWeight: FontWeight.w400, color: Colors.black),
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.w400,
+                                  color: Colors.black),
                             ))
                       ],
                     ),
@@ -333,7 +363,9 @@ class _AboutScreenState extends ConsumerState<AboutScreen> {
                         const Text(
                           "React-Native",
                           style: TextStyle(
-                              fontSize: 12, fontWeight: FontWeight.w400, color: Colors.black),
+                              fontSize: 12,
+                              fontWeight: FontWeight.w400,
+                              color: Colors.black),
                         )
                       ],
                     ),
@@ -352,7 +384,9 @@ class _AboutScreenState extends ConsumerState<AboutScreen> {
                         const Text(
                           "React JS",
                           style: TextStyle(
-                              fontSize: 12, fontWeight: FontWeight.w400, color: Colors.black),
+                              fontSize: 12,
+                              fontWeight: FontWeight.w400,
+                              color: Colors.black),
                         )
                       ],
                     ),
@@ -371,7 +405,9 @@ class _AboutScreenState extends ConsumerState<AboutScreen> {
                         const Text(
                           "Node JS",
                           style: TextStyle(
-                              fontSize: 12, fontWeight: FontWeight.w400, color: Colors.black),
+                              fontSize: 12,
+                              fontWeight: FontWeight.w400,
+                              color: Colors.black),
                         )
                       ],
                     ),
@@ -390,7 +426,9 @@ class _AboutScreenState extends ConsumerState<AboutScreen> {
                         const Text(
                           "MySql",
                           style: TextStyle(
-                              fontSize: 12, fontWeight: FontWeight.w400, color: Colors.black),
+                              fontSize: 12,
+                              fontWeight: FontWeight.w400,
+                              color: Colors.black),
                         )
                       ],
                     ),
@@ -402,7 +440,10 @@ class _AboutScreenState extends ConsumerState<AboutScreen> {
             alignment: Alignment.centerLeft,
             child: Text(
               "Then for support what i do, usually using:",
-              style: TextStyle(fontSize: 14, fontWeight: FontWeight.w700, color: Colors.black),
+              style: TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.w700,
+                  color: Colors.black),
             ),
           ),
           const Gap(16),
@@ -428,7 +469,9 @@ class _AboutScreenState extends ConsumerState<AboutScreen> {
                         const Text(
                           "VScode",
                           style: TextStyle(
-                              fontSize: 12, fontWeight: FontWeight.w400, color: Colors.black),
+                              fontSize: 12,
+                              fontWeight: FontWeight.w400,
+                              color: Colors.black),
                         )
                       ],
                     ),
@@ -447,7 +490,9 @@ class _AboutScreenState extends ConsumerState<AboutScreen> {
                         const Text(
                           "Android Studio",
                           style: TextStyle(
-                              fontSize: 12, fontWeight: FontWeight.w400, color: Colors.black),
+                              fontSize: 12,
+                              fontWeight: FontWeight.w400,
+                              color: Colors.black),
                         )
                       ],
                     ),
@@ -466,7 +511,9 @@ class _AboutScreenState extends ConsumerState<AboutScreen> {
                         const Text(
                           "Git",
                           style: TextStyle(
-                              fontSize: 12, fontWeight: FontWeight.w400, color: Colors.black),
+                              fontSize: 12,
+                              fontWeight: FontWeight.w400,
+                              color: Colors.black),
                         )
                       ],
                     ),
@@ -485,7 +532,9 @@ class _AboutScreenState extends ConsumerState<AboutScreen> {
                         const Text(
                           "Figma",
                           style: TextStyle(
-                              fontSize: 12, fontWeight: FontWeight.w400, color: Colors.black),
+                              fontSize: 12,
+                              fontWeight: FontWeight.w400,
+                              color: Colors.black),
                         )
                       ],
                     ),
@@ -504,7 +553,9 @@ class _AboutScreenState extends ConsumerState<AboutScreen> {
                         const Text(
                           "Postman",
                           style: TextStyle(
-                              fontSize: 12, fontWeight: FontWeight.w400, color: Colors.black),
+                              fontSize: 12,
+                              fontWeight: FontWeight.w400,
+                              color: Colors.black),
                         )
                       ],
                     ),
