@@ -32,33 +32,36 @@ class ExperienceItem extends StatelessWidget {
                   runSpacing: 5,
                   spacing: 5,
                   children: [
-                    ClipRRect(
-                      borderRadius: const BorderRadius.all(Radius.circular(100)),
-                      child: model.pathLogo != null
-                          ? Image.network(
-                              model.pathLogo!,
-                              width: 36,
-                              height: 36,
-                              fit: BoxFit.fill,
-                            )
-                          : Image.network(
-                              "https://images.unsplash.com/photo-1487446929682-f62f73984006?q=80&w=1471&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-                              width: 36,
-                              height: 36,
-                              fit: BoxFit.fill,
-                            ),
-                    ),
-                    const Gap(8),
                     SizedBox(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.end,
                         mainAxisSize: MainAxisSize.max,
                         children: [
+                          ClipRRect(
+                            borderRadius:
+                                const BorderRadius.all(Radius.circular(100)),
+                            child: model.pathLogo != null
+                                ? Image.network(
+                                    model.pathLogo!,
+                                    width: 36,
+                                    height: 36,
+                                    fit: BoxFit.fill,
+                                  )
+                                : Image.network(
+                                    "https://images.unsplash.com/photo-1487446929682-f62f73984006?q=80&w=1471&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                                    width: 36,
+                                    height: 36,
+                                    fit: BoxFit.fill,
+                                  ),
+                          ),
+                          const Gap(8),
                           Text(
                             model.companyName ?? "",
                             textAlign: TextAlign.end,
                             style: const TextStyle(
-                                fontSize: 18, color: Colors.blue, fontWeight: FontWeight.w700),
+                                fontSize: 18,
+                                color: Colors.blue,
+                                fontWeight: FontWeight.w700),
                           ),
                           const Gap(8),
                           SizedBox(
@@ -67,7 +70,9 @@ class ExperienceItem extends StatelessWidget {
                               "${model.dateStart ?? "0"}-${model.dateEnd ?? "0"}",
                               textAlign: TextAlign.end,
                               style: const TextStyle(
-                                  fontSize: 14, color: Colors.blue, fontWeight: FontWeight.w400),
+                                  fontSize: 14,
+                                  color: Colors.blue,
+                                  fontWeight: FontWeight.w400),
                             ),
                           ),
                         ],
@@ -111,7 +116,8 @@ class ExperienceItem extends StatelessWidget {
                                     width: 4,
                                     height: 4,
                                     decoration: const BoxDecoration(
-                                        shape: BoxShape.circle, color: Colors.grey),
+                                        shape: BoxShape.circle,
+                                        color: Colors.grey),
                                   ),
                                 )))
                 ]),
@@ -128,21 +134,27 @@ class ExperienceItem extends StatelessWidget {
                   model.position ?? "",
                   textAlign: TextAlign.start,
                   style: const TextStyle(
-                      fontSize: 18, color: Colors.blue, fontWeight: FontWeight.w700),
+                      fontSize: 18,
+                      color: Colors.blue,
+                      fontWeight: FontWeight.w700),
                 ),
                 const Gap(8),
                 Text(
                   model.typeWork ?? "",
                   textAlign: TextAlign.start,
                   style: const TextStyle(
-                      fontSize: 14, color: Colors.blue, fontWeight: FontWeight.w700),
+                      fontSize: 14,
+                      color: Colors.blue,
+                      fontWeight: FontWeight.w700),
                 ),
                 const Gap(8),
                 Text(
                   model.description ?? "",
                   textAlign: TextAlign.start,
                   style: const TextStyle(
-                      fontSize: 12, color: Colors.black, fontWeight: FontWeight.w400),
+                      fontSize: 12,
+                      color: Colors.black,
+                      fontWeight: FontWeight.w400),
                 ),
                 const Gap(8),
                 if (model.pathLinkCertif != null)
@@ -151,8 +163,10 @@ class ExperienceItem extends StatelessWidget {
                     onTap: () {},
                     child: const Text(
                       "Link Certificate",
-                      style:
-                          TextStyle(color: Colors.amber, fontSize: 12, fontWeight: FontWeight.w700),
+                      style: TextStyle(
+                          color: Colors.amber,
+                          fontSize: 12,
+                          fontWeight: FontWeight.w700),
                     ),
                   ))
               ],
