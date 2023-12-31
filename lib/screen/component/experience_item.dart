@@ -2,6 +2,7 @@ import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:myweb/model/experience_model.dart';
+import 'package:responsive_framework/responsive_framework.dart';
 
 class ExperienceItem extends StatelessWidget {
   final ExperienceModel model;
@@ -124,7 +125,9 @@ class ExperienceItem extends StatelessWidget {
           ),
           const Gap(16),
           SizedBox(
-            width: widthItem / 3,
+            width: ResponsiveBreakpoints.of(context).isDesktop
+                ? widthItem / 3
+                : widthItem / 4.5,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.start,
