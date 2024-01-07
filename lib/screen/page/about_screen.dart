@@ -114,7 +114,7 @@ class _AboutScreenState extends ConsumerState<AboutScreen> {
                   SizedBox(
                     width: MediaQuery.of(context).size.width * 0.8,
                     child: Text(
-                      "I am a computer science graduate and I work at a software company in Indonesia. As a developer, I have more than two years of experience working on various mobile and web application projects using modern frameworks. In addition, I am also interested in exploring other fields such as backend development and machine learning. I enjoy collaborating with my team, have a strong desire to learn, and am able to fulfill my obligations even under pressure.",
+                      "I have more than two years of experience working on various mobile and web application projects using modern frameworks such as Flutter, react JS, react-native also Android native Kotlin. In addition, I am also interested in exploring other fields such as backend development and machine learning such as nodeJS, fastApi, and Django for backend and TensorFlow for machine learning using MySQL as a database. I enjoy collaborating with my team, have a strong desire to learn, and can fulfill my obligations even under pressure, I also looking for a job hybrid, remote, or freelance especially in mobile apps and web apps projects.",
                       textScaler: ResponsiveBreakpoints.of(context).isMobile ||
                               ResponsiveBreakpoints.of(context).isTablet
                           ? const TextScaler.linear(0.75)
