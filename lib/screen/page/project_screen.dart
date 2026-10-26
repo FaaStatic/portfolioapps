@@ -35,7 +35,7 @@ class _ProjectScreenState extends ConsumerState<ProjectScreen> {
       eyebrow: "My Projects",
       title: "Some of My Works",
       floating: const [
-        Positioned(right: 40, top: 160, child: FloatingBadge(asset: "assets/images/ic_react_js.png", size: 60, blur: 2, turns: -0.06)),
+        Positioned(right: 40, top: 160, child: FloatingBadge(asset: "assets/images/ic_react_js.webp", size: 60, dim: true, turns: -0.06)),
       ],
       child: projects.isEmpty
           ? Center(child: Lottie.asset("assets/images/anim_loading.json", width: 150, height: 150))
@@ -44,7 +44,7 @@ class _ProjectScreenState extends ConsumerState<ProjectScreen> {
                 borderRadius: BorderRadius.circular(32),
                 child: SizedBox(
                   height: ResponsiveBreakpoints.of(context).isMobile ? 220 : 400,
-                  child: Image.asset("assets/images/avatar_projects.jpg",
+                  child: Image.asset("assets/images/avatar_projects.webp",
                       fit: BoxFit.cover,
                       // Frame the upper part of the shot so the face sits inside the banner.
                       alignment: const Alignment(0.3, -0.6),

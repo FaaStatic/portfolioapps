@@ -5,8 +5,8 @@ import 'package:myweb/screen/component/section.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-const _heroPhoto = "assets/images/avatar_hero.jpg";
-const _aboutPhoto = "assets/images/avatar_about.jpg";
+const _heroPhoto = "assets/images/avatar_hero.webp";
+const _aboutPhoto = "assets/images/avatar_about.webp";
 
 class HeroSection extends StatelessWidget {
   final VoidCallback onContact;
@@ -20,7 +20,8 @@ class HeroSection extends StatelessWidget {
     final intro = Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text("👋", style: TextStyle(fontSize: isDesktop ? 64 : 48)),
+        // An emoji here makes CanvasKit download a color emoji font at runtime.
+        Icon(Icons.waving_hand_rounded, size: isDesktop ? 64 : 48, color: Palette.accent),
         const Gap(16),
         Text("Hi, it's me\nFaruq.",
             style: displayStyle(context,
@@ -40,8 +41,8 @@ class HeroSection extends StatelessWidget {
 
     return Section(
       floating: const [
-        Positioned(left: 56, top: 120, child: FloatingBadge(asset: "assets/images/ic_firebase.png", size: 70, blur: 1.5, turns: -0.05)),
-        Positioned(left: 96, bottom: 40, child: FloatingBadge(asset: "assets/images/ic_typescript.png", size: 56, blur: 1, turns: 0.05, reverse: true)),
+        Positioned(left: 56, top: 120, child: FloatingBadge(asset: "assets/images/ic_firebase.webp", size: 70, dim: true, turns: -0.05)),
+        Positioned(left: 96, bottom: 40, child: FloatingBadge(asset: "assets/images/ic_typescript.webp", size: 56, dim: true, turns: 0.05, reverse: true)),
       ],
       child: isDesktop
           ? Row(children: [
@@ -81,13 +82,13 @@ class _HeroPortrait extends StatelessWidget {
         ),
         Align(
             alignment: const Alignment(-0.95, 0.05),
-            child: FloatingBadge(asset: "assets/images/ic_react_native.png", size: badge, turns: -0.04)),
+            child: FloatingBadge(asset: "assets/images/ic_react_native.webp", size: badge, turns: -0.04)),
         Align(
             alignment: const Alignment(0.92, -0.92),
-            child: FloatingBadge(asset: "assets/images/ic_flutter.png", size: badge, turns: 0.05, reverse: true)),
+            child: FloatingBadge(asset: "assets/images/ic_flutter.webp", size: badge, turns: 0.05, reverse: true)),
         Align(
             alignment: const Alignment(1.0, 0.62),
-            child: FloatingBadge(asset: "assets/images/ic_kotlin.png", size: badge, turns: -0.05)),
+            child: FloatingBadge(asset: "assets/images/ic_kotlin.webp", size: badge, turns: -0.05)),
       ]),
     );
   }
@@ -129,7 +130,7 @@ class AboutSection extends StatelessWidget {
 
     return Section(
       floating: const [
-        Positioned(left: 70, top: 90, child: FloatingBadge(asset: "assets/images/ic_git.png", size: 56, blur: 1, turns: 0.04)),
+        Positioned(left: 70, top: 90, child: FloatingBadge(asset: "assets/images/ic_git.webp", size: 56, dim: true, turns: 0.04)),
       ],
       child: isDesktop
           ? Row(children: [
@@ -179,11 +180,11 @@ class _AboutPortrait extends StatelessWidget {
         Positioned(
             right: height * 0.02,
             top: height * 0.18,
-            child: FloatingBadge(asset: "assets/images/ic_js.png", size: height * 0.13, turns: 0.04)),
+            child: FloatingBadge(asset: "assets/images/ic_js.webp", size: height * 0.13, turns: 0.04)),
         Positioned(
             left: height * 0.04,
             top: height * 0.02,
-            child: FloatingBadge(asset: "assets/images/ic_android.png", size: height * 0.11, turns: -0.04, reverse: true)),
+            child: FloatingBadge(asset: "assets/images/ic_android.webp", size: height * 0.11, turns: -0.04, reverse: true)),
       ]),
     );
   }

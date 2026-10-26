@@ -53,8 +53,8 @@ const _skills = [
       text: "Riverpod, BLoC, and Clean Architecture. Four of my seven published apps run on Flutter.",
       tools: [
         _Tool("Dart", logo: Logos.dart),
-        _Tool("Riverpod", asset: "assets/images/ic_riverpod.png"),
-        _Tool("BLoC", asset: "assets/images/ic_bloc.png"),
+        _Tool("Riverpod", asset: "assets/images/ic_riverpod.webp"),
+        _Tool("BLoC", asset: "assets/images/ic_bloc.webp"),
       ]),
   _Skill(
       category: "Mobile",
@@ -68,7 +68,7 @@ const _skills = [
       logo: Logos.go,
       text: "REST APIs with Fiber v3 and Gin, gRPC, GORM, Cobra CLI, and Swagger. Kafka and Elasticsearch at Reddog.",
       tools: [
-        _Tool("Fiber", asset: "assets/images/ic_fiber.png", wide: true),
+        _Tool("Fiber", asset: "assets/images/ic_fiber.webp", wide: true),
         _Tool("Gin", logo: Logos.gin),
         _Tool("Swagger", logo: Logos.swagger),
       ]),
@@ -142,7 +142,7 @@ class SkillsSection extends StatelessWidget {
       title: "My Skills",
       subtitle: "Tools I use across mobile, web, and backend work.",
       floating: const [
-        Positioned(right: 48, top: 40, child: FloatingBadge(asset: "assets/images/ic_dart.png", size: 58, blur: 1.5, turns: 0.06)),
+        Positioned(right: 48, top: 40, child: FloatingBadge(asset: "assets/images/ic_dart.webp", size: 58, dim: true, turns: 0.06)),
       ],
       child: ResponsiveGrid(
         minItemWidth: 220,

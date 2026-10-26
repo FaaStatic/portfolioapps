@@ -38,7 +38,7 @@ class HeadBar extends ConsumerWidget {
               children: [
                 InkWell(
                   onTap: links.values.first,
-                  child: Image.asset("assets/images/logo.png",
+                  child: Image.asset("assets/images/logo.webp",
                       height: isDesktop ? 46 : 38, semanticLabel: "Suhaili Faruq, back to top"),
                 ),
                 if (isDesktop) ...[

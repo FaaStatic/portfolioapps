@@ -51,7 +51,7 @@ class ContactSection extends StatelessWidget {
     return Section(
       panel: true,
       floating: const [
-        Positioned(left: 36, top: 120, child: FloatingBadge(asset: "assets/images/ic_kotlin.png", size: 46, blur: 1.5, turns: -0.06)),
+        Positioned(left: 36, top: 120, child: FloatingBadge(asset: "assets/images/ic_kotlin.webp", size: 46, dim: true, turns: -0.06)),
       ],
       child: isDesktop
           ? Row(children: [
@@ -87,17 +87,17 @@ class _ContactPortrait extends StatelessWidget {
             boxShadow: [BoxShadow(color: Palette.heading.withValues(alpha: 0.2), blurRadius: 36, offset: const Offset(0, 18))],
           ),
           child: ClipOval(
-              child: Image.asset("assets/images/avatar_contact.jpg",
+              child: Image.asset("assets/images/avatar_contact.webp",
                   fit: BoxFit.cover,
                   alignment: const Alignment(-0.1, -0.3),
                   semanticLabel: "Suhaili Faruq holding a phone with a mobile app")),
         ),
         Align(
             alignment: const Alignment(-0.6, -1.0),
-            child: FloatingBadge(asset: "assets/images/ic_flutter.png", size: badge, turns: 0.03)),
+            child: FloatingBadge(asset: "assets/images/ic_flutter.webp", size: badge, turns: 0.03)),
         Align(
             alignment: const Alignment(1.0, -0.75),
-            child: FloatingBadge(asset: "assets/images/ic_react_native.png", size: badge, turns: 0.06, reverse: true)),
+            child: FloatingBadge(asset: "assets/images/ic_react_native.webp", size: badge, turns: 0.06, reverse: true)),
       ]),
     );
   }
@@ -114,7 +114,7 @@ class FooterSection extends StatelessWidget {
     const item = TextStyle(fontFamily: bodyFont, fontSize: 15, height: 1.9, fontWeight: FontWeight.w500, color: Palette.body);
 
     final brand = Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-      Image.asset("assets/images/logo.png", height: 56, semanticLabel: "Suhaili Faruq"),
+      Image.asset("assets/images/logo.webp", height: 56, semanticLabel: "Suhaili Faruq"),
       const Gap(16),
       const Text("\"Offline-first apps, online-first attitude. Mobile engineer from Kotawaringin Barat.\"",
           style: TextStyle(fontFamily: bodyFont, fontSize: 15, height: 1.6, fontWeight: FontWeight.w500, color: Palette.body)),
@@ -194,7 +194,7 @@ class FooterSection extends StatelessWidget {
         Row(mainAxisAlignment: MainAxisAlignment.center, children: [
           const Text("Built with ",
               style: TextStyle(fontFamily: bodyFont, fontSize: 13, fontWeight: FontWeight.w600, color: Palette.body)),
-          Image.asset("assets/images/ic_flutter.png", width: 16, height: 16, semanticLabel: "Flutter"),
+          Image.asset("assets/images/ic_flutter.webp", width: 16, height: 16, semanticLabel: "Flutter"),
           const Text(" Flutter",
               style: TextStyle(fontFamily: bodyFont, fontSize: 13, fontWeight: FontWeight.w600, color: Palette.body)),
         ]),

@@ -95,19 +95,23 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                     controller: _scroll,
                     child: Column(
                       children: [
-                        HeroSection(key: _homeKey, onContact: () => _scrollTo(_contactKey)),
-                        AboutSection(key: _aboutKey, onMore: () => _scrollTo(_experienceKey)),
-                        SkillsSection(key: _skillsKey),
-                        ExperienceScreen(key: _experienceKey),
-                        ProjectScreen(key: _projectsKey),
-                        ContactSection(key: _contactKey),
-                        FooterSection(links: {
-                          "About Me": () => _scrollTo(_aboutKey),
-                          "My Skills": () => _scrollTo(_skillsKey),
-                          "My Experience": () => _scrollTo(_experienceKey),
-                          "My Projects": () => _scrollTo(_projectsKey),
-                          "Contact Me": () => _scrollTo(_contactKey),
-                        }),
+                        // Without a boundary per section, every scroll frame re-records the whole page.
+                        for (final section in [
+                          HeroSection(key: _homeKey, onContact: () => _scrollTo(_contactKey)),
+                          AboutSection(key: _aboutKey, onMore: () => _scrollTo(_experienceKey)),
+                          SkillsSection(key: _skillsKey),
+                          ExperienceScreen(key: _experienceKey),
+                          ProjectScreen(key: _projectsKey),
+                          ContactSection(key: _contactKey),
+                          FooterSection(links: {
+                            "About Me": () => _scrollTo(_aboutKey),
+                            "My Skills": () => _scrollTo(_skillsKey),
+                            "My Experience": () => _scrollTo(_experienceKey),
+                            "My Projects": () => _scrollTo(_projectsKey),
+                            "Contact Me": () => _scrollTo(_contactKey),
+                          }),
+                        ])
+                          RepaintBoundary(child: section),
                         // Keeps the footer clear of the floating bottom bar.
                         if (!isDesktop) const SizedBox(height: 96),
                       ],
