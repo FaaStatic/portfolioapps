@@ -16,11 +16,11 @@ class HeadBar extends ConsumerWidget {
   const HeadBar({super.key, required this.links, this.activeIndex = 0});
 
   Future<void> _openResume(WidgetRef ref) async {
-    if (ref.read(providerDownloadData).isEmpty) {
-      await ref.read(providerDownloadData.notifier).downloadData();
-    }
+    final ready = ref.read(providerDownloadData).isNotEmpty;
+    if (!ready) await ref.read(providerDownloadData.notifier).downloadData();
     final url = ref.read(providerDownloadData);
-    if (url.isNotEmpty) await launchUrl(Uri.parse(url));
+    // Browsers block a new tab opened after an await, so a late link opens in this tab instead.
+    if (url.isNotEmpty) await launchUrl(Uri.parse(url), webOnlyWindowName: ready ? "_blank" : "_self");
   }
 
   @override
