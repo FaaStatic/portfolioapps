@@ -1,6 +1,6 @@
-import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
+import 'package:myweb/helper/palette.dart';
 import 'package:myweb/model/experience_model.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 
@@ -11,170 +11,89 @@ class ExperienceItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final widthItem = MediaQuery.of(context).size.width;
-    return SizedBox(
-      width: widthItem * 0.85,
+    final isDesktop = ResponsiveBreakpoints.of(context).isDesktop;
+    final meta = [model.typeWork, model.location].whereType<String>().where((part) => part.isNotEmpty).join(", ");
+
+    final when = Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(model.period, style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w600, color: Palette.primary)),
+        if (meta.isNotEmpty) ...[
+          const Gap(4),
+          Text(meta,
+              style: const TextStyle(
+                  fontFamily: bodyFont, fontSize: 13, height: 1.5, fontWeight: FontWeight.w600, color: Palette.body)),
+        ],
+      ],
+    );
+
+    return IntrinsicHeight(
       child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.center,
-        mainAxisSize: MainAxisSize.max,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
+          if (isDesktop) ...[
+            SizedBox(width: 200, child: Padding(padding: const EdgeInsets.only(top: 22), child: when)),
+            const Gap(24),
+          ],
           SizedBox(
-            width: widthItem / 3,
-            height: 200,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
-                Flexible(
-                    child: Wrap(
-                  runAlignment: WrapAlignment.center,
-                  crossAxisAlignment: WrapCrossAlignment.center,
-                  runSpacing: 5,
-                  spacing: 5,
+            width: 20,
+            child: Column(children: [
+              const Gap(26),
+              Container(
+                width: 16,
+                height: 16,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: model.colorSymbol ?? Palette.primary,
+                  border: Border.all(color: Colors.white, width: 3),
+                ),
+              ),
+              if (!isLast) Expanded(child: Container(width: 2, color: Palette.primary.withValues(alpha: 0.25))),
+            ]),
+          ),
+          Gap(isDesktop ? 24 : 12),
+          Expanded(
+            child: Padding(
+              padding: EdgeInsets.only(bottom: isLast ? 0 : 20),
+              child: Container(
+                padding: EdgeInsets.all(isDesktop ? 28 : 20),
+                decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(28)),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    SizedBox(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.end,
-                        mainAxisSize: MainAxisSize.max,
-                        children: [
-                          ClipRRect(
-                            borderRadius:
-                                const BorderRadius.all(Radius.circular(100)),
-                            child: model.pathLogo != null
-                                ? Image.network(
-                                    model.pathLogo!,
-                                    width: 36,
-                                    height: 36,
-                                    fit: BoxFit.fill,
-                                  )
-                                : Image.network(
-                                    "https://images.unsplash.com/photo-1487446929682-f62f73984006?q=80&w=1471&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-                                    width: 36,
-                                    height: 36,
-                                    fit: BoxFit.fill,
-                                  ),
+                    if (!isDesktop) ...[when, const Gap(12)],
+                    Text(model.position ?? "",
+                        style: const TextStyle(
+                            fontSize: 18, height: 1.35, fontWeight: FontWeight.w700, color: Palette.heading)),
+                    const Gap(4),
+                    Text(model.companyName ?? "",
+                        style: const TextStyle(fontSize: 15, fontWeight: FontWeight.w500, color: Palette.heading)),
+                    const Gap(14),
+                    for (final highlight in model.highlights)
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 8),
+                        child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                          Container(
+                            width: 6,
+                            height: 6,
+                            margin: const EdgeInsets.only(top: 9, right: 12),
+                            decoration: const BoxDecoration(color: Palette.accent, shape: BoxShape.circle),
                           ),
-                          const Gap(8),
-                          Text(
-                            model.companyName ?? "",
-                            textAlign: TextAlign.end,
-                            style: const TextStyle(
-                                fontSize: 18,
-                                color: Colors.blue,
-                                fontWeight: FontWeight.w700),
-                          ),
-                          const Gap(8),
-                          SizedBox(
-                            width: 200,
-                            child: Text(
-                              "${model.dateStart ?? "0"}-${model.dateEnd ?? "0"}",
-                              textAlign: TextAlign.end,
-                              style: const TextStyle(
-                                  fontSize: 14,
-                                  color: Colors.blue,
-                                  fontWeight: FontWeight.w400),
-                            ),
-                          ),
-                        ],
+                          Expanded(
+                              child: Text(highlight,
+                                  style: const TextStyle(
+                                      fontFamily: bodyFont,
+                                      fontSize: 15,
+                                      height: 1.65,
+                                      fontWeight: FontWeight.w500,
+                                      color: Palette.body))),
+                        ]),
                       ),
-                    )
                   ],
-                )),
-              ],
+                ),
+              ),
             ),
           ),
-          const Gap(16),
-          SizedBox(
-            height: 200,
-            width: 24,
-            child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  DottedBorder(
-                      borderType: BorderType.Circle,
-                      child: Container(
-                        width: 24,
-                        height: 24,
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: model.colorSymbol,
-                        ),
-                      )),
-                  const Gap(8),
-                  if (!isLast)
-                    Expanded(
-                        child: ListView.builder(
-                            itemCount: 8,
-                            shrinkWrap: true,
-                            itemBuilder: (context, index) => Padding(
-                                  padding: const EdgeInsets.only(
-                                    bottom: 8,
-                                    top: 8,
-                                  ),
-                                  child: Container(
-                                    width: 4,
-                                    height: 4,
-                                    decoration: const BoxDecoration(
-                                        shape: BoxShape.circle,
-                                        color: Colors.grey),
-                                  ),
-                                )))
-                ]),
-          ),
-          const Gap(16),
-          SizedBox(
-            width: ResponsiveBreakpoints.of(context).isDesktop
-                ? widthItem / 3
-                : widthItem / 4.5,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.start,
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Text(
-                  model.position ?? "",
-                  textAlign: TextAlign.start,
-                  style: const TextStyle(
-                      fontSize: 18,
-                      color: Colors.blue,
-                      fontWeight: FontWeight.w700),
-                ),
-                const Gap(8),
-                Text(
-                  model.typeWork ?? "",
-                  textAlign: TextAlign.start,
-                  style: const TextStyle(
-                      fontSize: 14,
-                      color: Colors.blue,
-                      fontWeight: FontWeight.w700),
-                ),
-                const Gap(8),
-                Text(
-                  model.description ?? "",
-                  textAlign: TextAlign.start,
-                  style: const TextStyle(
-                      fontSize: 12,
-                      color: Colors.black,
-                      fontWeight: FontWeight.w400),
-                ),
-                const Gap(8),
-                if (model.pathLinkCertif != null)
-                  Flexible(
-                      child: InkWell(
-                    onTap: () {},
-                    child: const Text(
-                      "Link Certificate",
-                      style: TextStyle(
-                          color: Colors.amber,
-                          fontSize: 12,
-                          fontWeight: FontWeight.w700),
-                    ),
-                  ))
-              ],
-            ),
-          )
         ],
       ),
     );

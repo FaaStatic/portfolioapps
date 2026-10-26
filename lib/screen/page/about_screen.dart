@@ -1,572 +1,214 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:gap/gap.dart';
-import 'package:myweb/helper/util.dart';
-import 'package:responsive_framework/responsive_breakpoints.dart';
+import 'package:myweb/helper/palette.dart';
+import 'package:myweb/screen/component/section.dart';
+import 'package:responsive_framework/responsive_framework.dart';
+import 'package:url_launcher/url_launcher.dart';
 
-class AboutScreen extends ConsumerStatefulWidget {
-  const AboutScreen({super.key});
+const _heroPhoto = "assets/images/avatar_hero.jpg";
+const _aboutPhoto = "assets/images/avatar_about.jpg";
 
-  @override
-  ConsumerState<ConsumerStatefulWidget> createState() => _AboutScreenState();
-}
+class HeroSection extends StatelessWidget {
+  final VoidCallback onContact;
 
-class _AboutScreenState extends ConsumerState<AboutScreen> {
-  ScrollController _controller = ScrollController();
+  const HeroSection({super.key, required this.onContact});
 
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
-  }
-
-  List<int> listing = [1, 2, 3, 4, 5, 6, 7, 8];
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: Util().autoSizing(
-        context,
-        stat: 1,
-      ),
-      // height: Util().autoSizing(
-      //   context,
-      //   stat: 2,
-      // ),
-      child: ListView(
-        controller: _controller,
-        shrinkWrap: true,
-        physics: const NeverScrollableScrollPhysics(),
-        padding: const EdgeInsets.only(left: 28, right: 28),
-        children: [
-          const Gap(24),
-          Container(
-            constraints: BoxConstraints.expand(
-                width: Util().autoSizing(context, stat: 1),
-                height: Util().autoSizing(context, stat: 2, percent: 0.75)),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text.rich(
-                  TextSpan(
-                      text: "Mobile an",
-                      style: const TextStyle(
-                          fontSize: 40,
-                          color: Colors.blue,
-                          fontWeight: FontWeight.w700),
-                      children: [
-                        TextSpan(
-                            text: "d Web Developer",
-                            style: TextStyle(
-                                fontSize: 40,
-                                color: Colors.blue.shade100,
-                                fontWeight: FontWeight.w600))
-                      ]),
-                  textAlign: TextAlign.center,
-                ),
-                const Gap(8),
-                Text(
-                  "I develop mobile and web application with modern framework for your business.",
-                  style: TextStyle(
-                      fontSize: 16, color: Colors.blueAccent.shade700),
-                  textAlign: TextAlign.center,
-                ),
-                Gap(MediaQuery.of(context).size.height * 0.10),
-                Container(
-                  width: 150,
-                  height: 150,
-                  decoration: const BoxDecoration(shape: BoxShape.circle),
-                  child: ClipOval(
-                    child: Image.asset(
-                      "assets/images/image_photo.jpg",
-                      fit: BoxFit.fill,
-                    ),
-                  ),
-                )
-              ],
-            ),
-          ),
-          const Gap(36),
-          Container(
-            width: Util().autoSizing(context, stat: 1, percent: 0.8),
-            padding: const EdgeInsets.all(36),
-            decoration: BoxDecoration(
-              color: Colors.blue.shade900,
-              borderRadius: const BorderRadius.all(Radius.circular(10)),
-            ),
-            child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  const Gap(16),
-                  const Align(
-                    alignment: Alignment.center,
-                    child: Text(
-                      "Hi i'm Faruq welcome to my website portfolio.",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                          fontSize: 25,
-                          color: Colors.white,
-                          fontWeight: FontWeight.w700),
-                    ),
-                  ),
-                  const Gap(28),
-                  SizedBox(
-                    width: MediaQuery.of(context).size.width * 0.8,
-                    child: Text(
-                      "I have more than two years of experience working on various mobile and web application projects using modern frameworks such as Flutter, react JS, react-native also Android native Kotlin. In addition, I am also interested in exploring other fields such as backend development and machine learning such as nodeJS, fastApi, and Django for backend and TensorFlow for machine learning using MySQL as a database. I enjoy collaborating with my team, have a strong desire to learn, and can fulfill my obligations even under pressure, I also looking for a job hybrid, remote, or freelance especially in mobile apps and web apps projects.",
-                      textScaler: ResponsiveBreakpoints.of(context).isMobile ||
-                              ResponsiveBreakpoints.of(context).isTablet
-                          ? const TextScaler.linear(0.75)
-                          : const TextScaler.linear(1),
-                      style: const TextStyle(
-                        fontSize: 16,
-                        height: 2,
-                        color: Colors.white,
-                        fontWeight: FontWeight.w400,
-                      ),
-                      textAlign: TextAlign.center,
-                    ),
-                  ),
-                  const Gap(16),
-                ]),
-          ),
-          const Gap(36),
-          Container(
-            height: 80,
-            width: 80,
-            decoration:
-                const BoxDecoration(shape: BoxShape.circle, color: Colors.blue),
-            child: Center(
-              child: SvgPicture.asset(
-                "assets/images/ic_code.svg",
-                width: 45,
-                height: 45,
-                color: Colors.white,
-              ),
-            ),
-          ),
-          const Gap(16),
-          const Align(
-            alignment: Alignment.center,
-            child: Text(
-              "Main Skills",
-              style: TextStyle(
-                  fontSize: 14,
-                  fontWeight: FontWeight.w600,
-                  color: Colors.black),
-            ),
-          ),
-          const Gap(8),
-          const Align(
-              alignment: Alignment.center,
-              child: Text(
-                "From scratch, i code and build something then ensure run to mobile and browser",
-                style: TextStyle(
-                    fontSize: 12,
-                    fontWeight: FontWeight.w600,
-                    color: Colors.black),
-                textAlign: TextAlign.left,
-              )),
-          const Gap(16),
-          Container(
-              width: Util().autoSizing(context, stat: 1),
-              height: 1,
-              color: Colors.blue.shade600),
-          const Gap(24),
-          const Align(
-            alignment: Alignment.centerLeft,
-            child: Text(
-              "I Like Code with Languange:",
-              style: TextStyle(
-                  fontSize: 14,
-                  fontWeight: FontWeight.w700,
-                  color: Colors.black),
-            ),
-          ),
-          const Gap(16),
-          Align(
-              alignment: Alignment.centerLeft,
-              child: Wrap(
-                runSpacing: 20,
-                spacing: 10,
-                children: [
-                  SizedBox(
-                    width: 220,
-                    height: 50,
-                    child: Row(
-                      children: [
-                        Image.asset(
-                          "assets/images/ic_dart.png",
-                          width: 20,
-                          height: 20,
-                        ),
-                        const Gap(30),
-                        const Text(
-                          "Dart Languange",
-                          style: TextStyle(
-                              fontSize: 12,
-                              fontWeight: FontWeight.w400,
-                              color: Colors.black),
-                        )
-                      ],
-                    ),
-                  ),
-                  SizedBox(
-                    width: 220,
-                    height: 50,
-                    child: Row(
-                      children: [
-                        Image.asset(
-                          "assets/images/ic_js.png",
-                          width: 20,
-                          height: 20,
-                        ),
-                        Image.asset(
-                          "assets/images/ic_typescript.png",
-                          width: 20,
-                          height: 20,
-                        ),
-                        const Gap(8),
-                        const SizedBox(
-                            width: 160,
-                            child: Text(
-                              "Javascript/Typescript Languange",
-                              maxLines: 2,
-                              style: TextStyle(
-                                  fontSize: 12,
-                                  overflow: TextOverflow.ellipsis,
-                                  fontWeight: FontWeight.w400,
-                                  color: Colors.black),
-                            ))
-                      ],
-                    ),
-                  ),
-                  SizedBox(
-                    width: 220,
-                    height: 50,
-                    child: Row(
-                      children: [
-                        Image.asset(
-                          "assets/images/ic_kotlin.png",
-                          width: 20,
-                          height: 20,
-                        ),
-                        const Gap(30),
-                        const Text(
-                          "Kotlin Languange",
-                          style: TextStyle(
-                              fontSize: 12,
-                              fontWeight: FontWeight.w400,
-                              color: Colors.black),
-                        )
-                      ],
-                    ),
-                  ),
-                  SizedBox(
-                    width: 220,
-                    height: 50,
-                    child: Row(
-                      children: [
-                        Image.asset(
-                          "assets/images/ic_java.png",
-                          width: 20,
-                          height: 20,
-                        ),
-                        const Gap(30),
-                        const Text(
-                          "Java Languange",
-                          style: TextStyle(
-                              fontSize: 12,
-                              fontWeight: FontWeight.w400,
-                              color: Colors.black),
-                        )
-                      ],
-                    ),
-                  ),
-                ],
-              )),
-          const Gap(24),
-          const Align(
-            alignment: Alignment.centerLeft,
-            child: Text(
-              "And using modern framework like:",
-              style: TextStyle(
-                  fontSize: 14,
-                  fontWeight: FontWeight.w700,
-                  color: Colors.black),
-            ),
-          ),
-          const Gap(16),
-          Align(
-              alignment: Alignment.centerLeft,
-              child: Wrap(
-                runSpacing: 20,
-                spacing: 10,
-                children: [
-                  SizedBox(
-                    width: 220,
-                    height: 50,
-                    child: Row(
-                      children: [
-                        Image.asset(
-                          "assets/images/ic_flutter.png",
-                          width: 20,
-                          height: 20,
-                        ),
-                        const Gap(30),
-                        const Text(
-                          "Flutter",
-                          style: TextStyle(
-                              fontSize: 12,
-                              fontWeight: FontWeight.w400,
-                              color: Colors.black),
-                        )
-                      ],
-                    ),
-                  ),
-                  SizedBox(
-                    width: 220,
-                    height: 50,
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Image.asset(
-                          "assets/images/ic_android.png",
-                          width: 20,
-                          height: 20,
-                        ),
-                        const Gap(30),
-                        const SizedBox(
-                            width: 150,
-                            child: Text(
-                              "Android Jetpack Compose",
-                              style: TextStyle(
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.w400,
-                                  color: Colors.black),
-                            ))
-                      ],
-                    ),
-                  ),
-                  SizedBox(
-                    width: 220,
-                    height: 50,
-                    child: Row(
-                      children: [
-                        Image.asset(
-                          "assets/images/ic_react_native.png",
-                          width: 20,
-                          height: 20,
-                        ),
-                        const Gap(30),
-                        const Text(
-                          "React-Native",
-                          style: TextStyle(
-                              fontSize: 12,
-                              fontWeight: FontWeight.w400,
-                              color: Colors.black),
-                        )
-                      ],
-                    ),
-                  ),
-                  SizedBox(
-                    width: 220,
-                    height: 50,
-                    child: Row(
-                      children: [
-                        Image.asset(
-                          "assets/images/ic_react_js.png",
-                          width: 20,
-                          height: 20,
-                        ),
-                        const Gap(30),
-                        const Text(
-                          "React JS",
-                          style: TextStyle(
-                              fontSize: 12,
-                              fontWeight: FontWeight.w400,
-                              color: Colors.black),
-                        )
-                      ],
-                    ),
-                  ),
-                  SizedBox(
-                    width: 220,
-                    height: 50,
-                    child: Row(
-                      children: [
-                        Image.asset(
-                          "assets/images/ic_node.png",
-                          width: 20,
-                          height: 20,
-                        ),
-                        const Gap(30),
-                        const Text(
-                          "Node JS",
-                          style: TextStyle(
-                              fontSize: 12,
-                              fontWeight: FontWeight.w400,
-                              color: Colors.black),
-                        )
-                      ],
-                    ),
-                  ),
-                  SizedBox(
-                    width: 220,
-                    height: 50,
-                    child: Row(
-                      children: [
-                        Image.asset(
-                          "assets/images/ic_mysql.png",
-                          width: 20,
-                          height: 20,
-                        ),
-                        const Gap(30),
-                        const Text(
-                          "MySql",
-                          style: TextStyle(
-                              fontSize: 12,
-                              fontWeight: FontWeight.w400,
-                              color: Colors.black),
-                        )
-                      ],
-                    ),
-                  ),
-                ],
-              )),
-          const Gap(24),
-          const Align(
-            alignment: Alignment.centerLeft,
-            child: Text(
-              "Then for support what i do, usually using:",
-              style: TextStyle(
-                  fontSize: 14,
-                  fontWeight: FontWeight.w700,
-                  color: Colors.black),
-            ),
-          ),
-          const Gap(16),
-          Align(
-            alignment: Alignment.centerLeft,
-            child: SizedBox(
-              width: Util().autoSizing(context, stat: 1),
-              child: Wrap(
-                runSpacing: 20,
-                spacing: 10,
-                children: [
-                  SizedBox(
-                    width: 220,
-                    height: 50,
-                    child: Row(
-                      children: [
-                        Image.asset(
-                          "assets/images/ic_vscode.png",
-                          width: 20,
-                          height: 20,
-                        ),
-                        const Gap(30),
-                        const Text(
-                          "VScode",
-                          style: TextStyle(
-                              fontSize: 12,
-                              fontWeight: FontWeight.w400,
-                              color: Colors.black),
-                        )
-                      ],
-                    ),
-                  ),
-                  SizedBox(
-                    width: 220,
-                    height: 50,
-                    child: Row(
-                      children: [
-                        Image.asset(
-                          "assets/images/ic_studio.png",
-                          width: 20,
-                          height: 20,
-                        ),
-                        const Gap(30),
-                        const Text(
-                          "Android Studio",
-                          style: TextStyle(
-                              fontSize: 12,
-                              fontWeight: FontWeight.w400,
-                              color: Colors.black),
-                        )
-                      ],
-                    ),
-                  ),
-                  SizedBox(
-                    width: 220,
-                    height: 50,
-                    child: Row(
-                      children: [
-                        Image.asset(
-                          "assets/images/ic_git.png",
-                          width: 20,
-                          height: 20,
-                        ),
-                        const Gap(30),
-                        const Text(
-                          "Git",
-                          style: TextStyle(
-                              fontSize: 12,
-                              fontWeight: FontWeight.w400,
-                              color: Colors.black),
-                        )
-                      ],
-                    ),
-                  ),
-                  SizedBox(
-                    width: 220,
-                    height: 50,
-                    child: Row(
-                      children: [
-                        Image.asset(
-                          "assets/images/ic_figma.png",
-                          width: 20,
-                          height: 20,
-                        ),
-                        const Gap(30),
-                        const Text(
-                          "Figma",
-                          style: TextStyle(
-                              fontSize: 12,
-                              fontWeight: FontWeight.w400,
-                              color: Colors.black),
-                        )
-                      ],
-                    ),
-                  ),
-                  SizedBox(
-                    width: 220,
-                    height: 50,
-                    child: Row(
-                      children: [
-                        Image.asset(
-                          "assets/images/ic_postman.png",
-                          width: 20,
-                          height: 20,
-                        ),
-                        const Gap(30),
-                        const Text(
-                          "Postman",
-                          style: TextStyle(
-                              fontSize: 12,
-                              fontWeight: FontWeight.w400,
-                              color: Colors.black),
-                        )
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-          const Gap(28),
-        ],
-      ),
+    final isDesktop = ResponsiveBreakpoints.of(context).isDesktop;
+
+    final intro = Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text("👋", style: TextStyle(fontSize: isDesktop ? 64 : 48)),
+        const Gap(16),
+        Text("Hi, it's me\nFaruq.",
+            style: displayStyle(context,
+                desktop: (MediaQuery.sizeOf(context).width * 0.06).clamp(56, 84).toDouble(), mobile: 50)),
+        const Gap(20),
+        Text("Mobile Engineer by Craft,\nFull-Stack by Practice.",
+            style: TextStyle(
+                fontFamily: bodyFont,
+                fontSize: isDesktop ? 26 : 20,
+                height: 1.25,
+                fontWeight: FontWeight.w500,
+                color: Palette.body)),
+        Gap(isDesktop ? 48 : 32),
+        PillButton(label: "Contact Me", onPressed: onContact),
+      ],
     );
+
+    return Section(
+      floating: const [
+        Positioned(left: 56, top: 120, child: FloatingBadge(asset: "assets/images/ic_firebase.png", size: 70, blur: 1.5, turns: -0.05)),
+        Positioned(left: 96, bottom: 40, child: FloatingBadge(asset: "assets/images/ic_typescript.png", size: 56, blur: 1, turns: 0.05, reverse: true)),
+      ],
+      child: isDesktop
+          ? Row(children: [
+              Expanded(flex: 5, child: Padding(padding: const EdgeInsets.only(left: 56), child: intro)),
+              const Expanded(flex: 6, child: _HeroPortrait(size: 520)),
+            ])
+          : Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+              intro,
+              const Gap(24),
+              const Center(child: _HeroPortrait(size: 320)),
+            ]),
+    );
+  }
+}
+
+class _HeroPortrait extends StatelessWidget {
+  final double size;
+  const _HeroPortrait({required this.size});
+
+  @override
+  Widget build(BuildContext context) {
+    final badge = size * 0.14;
+    return SizedBox.square(
+      dimension: size,
+      child: Stack(clipBehavior: Clip.none, alignment: Alignment.center, children: [
+        Glow(size: size * 1.25),
+        Container(
+          width: size * 0.74,
+          height: size * 0.74,
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            boxShadow: [BoxShadow(color: Palette.heading.withValues(alpha: 0.22), blurRadius: 50, offset: const Offset(0, 24))],
+          ),
+          child: ClipOval(
+              child: Image.asset(_heroPhoto,
+                  fit: BoxFit.cover, semanticLabel: "Illustrated portrait of Suhaili Faruq in front of Flutter and Go code")),
+        ),
+        Align(
+            alignment: const Alignment(-0.95, 0.05),
+            child: FloatingBadge(asset: "assets/images/ic_react_native.png", size: badge, turns: -0.04)),
+        Align(
+            alignment: const Alignment(0.92, -0.92),
+            child: FloatingBadge(asset: "assets/images/ic_flutter.png", size: badge, turns: 0.05, reverse: true)),
+        Align(
+            alignment: const Alignment(1.0, 0.62),
+            child: FloatingBadge(asset: "assets/images/ic_kotlin.png", size: badge, turns: -0.05)),
+      ]),
+    );
+  }
+}
+
+class AboutSection extends StatelessWidget {
+  final VoidCallback onMore;
+  const AboutSection({super.key, required this.onMore});
+
+  @override
+  Widget build(BuildContext context) {
+    final isDesktop = ResponsiveBreakpoints.of(context).isDesktop;
+    const paragraph = TextStyle(fontFamily: bodyFont, fontSize: 17, height: 1.7, fontWeight: FontWeight.w500, color: Palette.body);
+
+    final story = Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const Text("ABOUT MYSELF", style: eyebrowStyle),
+        const Gap(10),
+        Text("Know About Me\nIn Detail", style: displayStyle(context)),
+        const Gap(20),
+        const Text(
+            "I'm a mobile engineer with 4+ years building offline-first apps in React Native, Flutter, and Kotlin, "
+            "and 7 releases on the Play Store and App Store. I also build REST APIs in Go and Kotlin on PostgreSQL and Redis, "
+            "and I work full-stack on a production POS system at Reddog. I use Claude Code to plan, test, and debug, "
+            "so I ship features faster without skipping checks.",
+            style: paragraph),
+        const Gap(24),
+        const _ContactLine(icon: Icons.location_on, label: "Kotawaringin Barat, Indonesia"),
+        _ContactLine(icon: Icons.phone, label: "+62 857-1356-1437", uri: Uri(scheme: "tel", path: "+6285713561437")),
+        _ContactLine(
+            icon: Icons.email,
+            label: "suhaili.faruq01@gmail.com",
+            uri: Uri(scheme: "mailto", path: "suhaili.faruq01@gmail.com")),
+        const Gap(32),
+        PillButton(label: "See My Experience", onPressed: onMore),
+      ],
+    );
+
+    return Section(
+      floating: const [
+        Positioned(left: 70, top: 90, child: FloatingBadge(asset: "assets/images/ic_git.png", size: 56, blur: 1, turns: 0.04)),
+      ],
+      child: isDesktop
+          ? Row(children: [
+              Expanded(child: Padding(padding: const EdgeInsets.only(left: 56), child: story)),
+              const Gap(48),
+              const Expanded(child: _AboutPortrait(height: 520)),
+            ])
+          : Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
+              story,
+              const Gap(40),
+              const _AboutPortrait(height: 400),
+            ]),
+    );
+  }
+}
+
+/// Arch-cropped photo with squiggles and floating badges, mirroring the reference's second illustration.
+class _AboutPortrait extends StatelessWidget {
+  final double height;
+  const _AboutPortrait({required this.height});
+
+  @override
+  Widget build(BuildContext context) {
+    final width = height * 0.68;
+    return SizedBox(
+      height: height,
+      child: Stack(clipBehavior: Clip.none, alignment: Alignment.center, children: [
+        Glow(size: height * 1.1),
+        Container(
+          width: width,
+          height: height * 0.86,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.vertical(top: Radius.circular(width / 2), bottom: const Radius.circular(36)),
+            boxShadow: [BoxShadow(color: Palette.heading.withValues(alpha: 0.2), blurRadius: 40, offset: const Offset(0, 20))],
+          ),
+          child: ClipRRect(
+            borderRadius: BorderRadius.vertical(top: Radius.circular(width / 2), bottom: const Radius.circular(36)),
+            // The figure stands on the right of the whiteboard; keep him and part of the sketch in frame.
+            child: Image.asset(_aboutPhoto,
+                fit: BoxFit.cover,
+                alignment: const Alignment(0.55, 0),
+                semanticLabel: "Suhaili Faruq sketching a Flutter, React Native, and Go architecture on a whiteboard"),
+          ),
+        ),
+        Positioned(left: 0, bottom: height * 0.08, child: Squiggle(height: height * 0.22)),
+        Positioned(right: 0, bottom: height * 0.08, child: Squiggle(height: height * 0.22)),
+        Positioned(
+            right: height * 0.02,
+            top: height * 0.18,
+            child: FloatingBadge(asset: "assets/images/ic_js.png", size: height * 0.13, turns: 0.04)),
+        Positioned(
+            left: height * 0.04,
+            top: height * 0.02,
+            child: FloatingBadge(asset: "assets/images/ic_android.png", size: height * 0.11, turns: -0.04, reverse: true)),
+      ]),
+    );
+  }
+}
+
+class _ContactLine extends StatelessWidget {
+  final IconData icon;
+  final String label;
+  final Uri? uri;
+
+  const _ContactLine({required this.icon, required this.label, this.uri});
+
+  @override
+  Widget build(BuildContext context) {
+    final line = Padding(
+      padding: const EdgeInsets.symmetric(vertical: 7),
+      child: Row(mainAxisSize: MainAxisSize.min, children: [
+        Icon(icon, size: 20, color: Palette.heading),
+        const Gap(14),
+        Flexible(
+            child: Text(label,
+                style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600, color: Palette.heading))),
+      ]),
+    );
+    if (uri == null) return line;
+    return InkWell(borderRadius: BorderRadius.circular(8), onTap: () => launchUrl(uri!), child: line);
   }
 }

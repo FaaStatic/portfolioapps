@@ -11,6 +11,7 @@ class ProjectModel {
   final String? playStoreLink;
   final String? appStoreLink;
   final String? webLink;
+  final bool isPrivate;
   const ProjectModel(
       {required this.projectName,
       required this.typeProject,
@@ -23,7 +24,8 @@ class ProjectModel {
       required this.appStoreLink,
       required this.webLink,
       required this.githubLink,
-      required this.playStoreLink});
+      required this.playStoreLink,
+      this.isPrivate = false});
 
   factory ProjectModel.fromJson(Map<String, dynamic> json) => ProjectModel(
       projectName: json["project_name"],
@@ -37,5 +39,9 @@ class ProjectModel {
       appStoreLink: json["appstore_link"],
       webLink: json["web_link"],
       githubLink: json["github_link"],
-      playStoreLink: json["playstore_link"]);
+      playStoreLink: json["playstore_link"],
+      isPrivate: json["is_private"] == true);
+
+  String get period =>
+      startProject == endProject ? startProject ?? "" :"${startProject ?? ""} – ${endProject ?? ""}";
 }

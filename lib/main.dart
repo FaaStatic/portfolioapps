@@ -6,6 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:myweb/firebase_options.dart';
+import 'package:myweb/helper/palette.dart';
 import 'package:myweb/helper/route_manager.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 
@@ -40,11 +41,12 @@ class AppRoot extends StatelessWidget {
       builder: ((context, child) => ResponsiveBreakpoints.builder(breakpoints: [
             const Breakpoint(start: 0, end: 450, name: MOBILE),
             const Breakpoint(start: 451, end: 800, name: TABLET),
-            const Breakpoint(start: 801, end: 1920, name: DESKTOP),
+            const Breakpoint(start: 801, end: double.infinity, name: DESKTOP),
           ], child: child!)),
       theme: ThemeData(
         useMaterial3: false,
-        fontFamily: "Poppins",
+        fontFamily: "Nunito",
+        scaffoldBackgroundColor: Palette.background,
       ),
     );
   }

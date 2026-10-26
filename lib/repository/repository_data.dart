@@ -22,7 +22,7 @@ class RepositoryData {
   Future<ResponseModel?> getprojectData() async {
     CollectionReference dataProject = instance.collection("project_work");
 
-    var dataResponse = await dataProject.orderBy("end_project", descending: true).get();
+    var dataResponse = await dataProject.orderBy("sort_order").get();
 
     return ResponseModel(data: dataResponse.docChanges, status: 200);
   }

@@ -29,10 +29,11 @@ environment:
 # versions available, run `flutter pub outdated`.
 dependencies:
   cloud_firestore: ^4.13.6
+  colorful_iconify_flutter: ^0.0.5
   cupertino_icons: ^1.0.2
   dotted_border: ^2.1.0
   firebase_core: ^2.24.2
-  firebase_storage: ^11.5.6
+  firebase_storage: ^11.7.7
   flutter:
     sdk: flutter
   flutter_riverpod: ^2.4.9
@@ -77,26 +78,28 @@ flutter:
   # list giving the asset and orher descriptors for the font. For
   # example:
   fonts:
-    - family: Poppins
+    - family: Nunito
       fonts:
-        - asset: google_fonts/Poppins-Black.ttf
+        - asset: google_fonts/Nunito-Black.ttf
           weight: 900
-        - asset: google_fonts/Poppins-ExtraBold.ttf
+        - asset: google_fonts/Nunito-ExtraBold.ttf
           weight: 800
-        - asset: google_fonts/Poppins-Bold.ttf
+        - asset: google_fonts/Nunito-Bold.ttf
           weight: 700
-        - asset: google_fonts/Poppins-SemiBold.ttf
+        - asset: google_fonts/Nunito-SemiBold.ttf
           weight: 600
-        - asset: google_fonts/Poppins-Medium.ttf
-          weight: 500
-        - asset: google_fonts/Poppins-Regular.ttf
+        - asset: google_fonts/Nunito-Regular.ttf
           weight: 400
-        - asset: google_fonts/Poppins-Light.ttf
-          weight: 300
-        - asset: google_fonts/Poppins-ExtraLight.ttf
-          weight: 200
-        - asset: google_fonts/Poppins-Thin.ttf
-          weight: 100
+    - family: Quicksand
+      fonts:
+        - asset: google_fonts/Quicksand-Bold.ttf
+          weight: 700
+        - asset: google_fonts/Quicksand-SemiBold.ttf
+          weight: 600
+        - asset: google_fonts/Quicksand-Medium.ttf
+          weight: 500
+        - asset: google_fonts/Quicksand-Regular.ttf
+          weight: 400
   #   - family: Trajan Pro
   #     fonts:
   #       - asset: fonts/TrajanPro.ttf

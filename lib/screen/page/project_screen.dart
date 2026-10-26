@@ -1,15 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:gap/gap.dart';
 import 'package:lottie/lottie.dart';
-import 'package:myweb/helper/util.dart';
-import 'package:myweb/model/contact_model.dart';
 import 'package:myweb/provider/provider_project.dart';
-import 'package:myweb/screen/component/item_contact.dart';
 import 'package:myweb/screen/component/item_project.dart';
-import 'package:responsive_framework/responsive_breakpoints.dart';
-import 'package:url_launcher/url_launcher.dart';
+import 'package:myweb/screen/component/section.dart';
+import 'package:responsive_framework/responsive_framework.dart';
 
 class ProjectScreen extends ConsumerStatefulWidget {
   const ProjectScreen({super.key});
@@ -19,250 +15,62 @@ class ProjectScreen extends ConsumerStatefulWidget {
 }
 
 class _ProjectScreenState extends ConsumerState<ProjectScreen> {
-  final List<ContactModel> listing = [
-    const ContactModel(
-        title: "Github",
-        iconLink: "assets/images/ic_github.svg",
-        link: "https://github.com/FaaStatic"),
-    const ContactModel(
-        title: "Linkedin",
-        iconLink: "assets/images/ic_linkedin.svg",
-        link: "https://www.linkedin.com/in/suhaili-faruq-8475a0189/"),
-    const ContactModel(
-        title: "email",
-        iconLink: "assets/images/ic_gmail.svg",
-        link:
-            "mailto:suhaili.faruq01@gmail.com?subject=Invitation Collaborate&body=Hi Faruq, i want to collaborate with you about ..."),
-    const ContactModel(
-        title: "Whatsapp",
-        iconLink: "assets/images/ic_wa.svg",
-        link:
-            "https://wa.me/085713561437/?text=I want collaborate with you ..."),
-    const ContactModel(
-        title: "Telegram",
-        iconLink: "assets/images/ic_tele.svg",
-        link: "https://t.me/suhailifaruq"),
-    const ContactModel(
-        title: "Instagram",
-        iconLink: "assets/images/ic_ig.svg",
-        link: "https://www.instagram.com/suhailifaruq_/"),
-  ];
+  static const _initialCount = 8;
+  bool _showAll = false;
 
-  ScrollController _controller = ScrollController();
   @override
   void initState() {
+    super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       ref.read(providerProjectGet.notifier).getAllData();
     });
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    final widthScreen = MediaQuery.of(context).size.width;
-    return SizedBox(
-      width: Util().autoSizing(
-        context,
-        stat: 1,
-      ),
-      child: ListView(
-        controller: _controller,
-        shrinkWrap: true,
-        physics: const NeverScrollableScrollPhysics(),
-        padding:
-            EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.15),
-        children: [
-          const Gap(24),
-          Container(
-            height: 80,
-            width: 80,
-            decoration:
-                const BoxDecoration(shape: BoxShape.circle, color: Colors.blue),
-            child: Center(
-              child: SvgPicture.asset(
-                "assets/images/ic_project.svg",
-                width: 45,
-                height: 45,
-                color: Colors.white,
-              ),
-            ),
-          ),
-          const Gap(16),
-          const Align(
-            alignment: Alignment.center,
-            child: Text(
-              "Recent Work",
-              style: TextStyle(
-                  fontSize: 14,
-                  fontWeight: FontWeight.w600,
-                  color: Colors.black),
-            ),
-          ),
-          const Gap(8),
-          const Align(
-              alignment: Alignment.center,
-              child: Text(
-                "Here are the list project while i working on programming job: ",
-                style: TextStyle(
-                    fontSize: 12,
-                    fontWeight: FontWeight.w600,
-                    color: Colors.black),
-                textAlign: TextAlign.left,
-              )),
-          const Gap(16),
-          Padding(
-              padding: const EdgeInsets.only(left: 28, right: 28),
-              child: Container(
-                  width: Util().autoSizing(context, stat: 1),
-                  height: 1,
-                  color: Colors.blue.shade600)),
-          const Gap(24),
-          Consumer(builder: (context, ref, _) {
-            var response = ref.watch(providerProjectGet);
+    final projects = ref.watch(providerProjectGet);
 
-            if (response.isNotEmpty) {
-              return Padding(
-                padding: EdgeInsets.only(
-                    left: ResponsiveBreakpoints.of(context).isMobile ||
-                            ResponsiveBreakpoints.of(context).isTablet
-                        ? 18
-                        : 28,
-                    right: ResponsiveBreakpoints.of(context).isMobile ||
-                            ResponsiveBreakpoints.of(context).isTablet
-                        ? 18
-                        : 28),
-                child: Wrap(
-                  alignment: WrapAlignment.center,
-                  spacing:
-                      ResponsiveBreakpoints.of(context).isDesktop ? 25 : 10,
-                  runSpacing:
-                      ResponsiveBreakpoints.of(context).isDesktop ? 25 : 10,
-                  children: [
-                    ...response.map((item) => ItemProject(
-                          model: item,
-                          callBack: (value) {},
-                        )),
-                  ],
+    return Section(
+      panel: true,
+      eyebrow: "My Projects",
+      title: "Some of My Works",
+      floating: const [
+        Positioned(right: 40, top: 160, child: FloatingBadge(asset: "assets/images/ic_react_js.png", size: 60, blur: 2, turns: -0.06)),
+      ],
+      child: projects.isEmpty
+          ? Center(child: Lottie.asset("assets/images/anim_loading.json", width: 150, height: 150))
+          : Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
+              ClipRRect(
+                borderRadius: BorderRadius.circular(32),
+                child: SizedBox(
+                  height: ResponsiveBreakpoints.of(context).isMobile ? 220 : 400,
+                  child: Image.asset("assets/images/avatar_projects.jpg",
+                      fit: BoxFit.cover,
+                      // Frame the upper part of the shot so the face sits inside the banner.
+                      alignment: const Alignment(0.3, -0.6),
+                      semanticLabel: "Suhaili Faruq writing code on two monitors"),
                 ),
-              );
-            } else {
-              return SizedBox(
-                width: Util().autoSizing(context, stat: 1),
-                height: Util().autoSizing(context, stat: 2),
-                child: Center(
-                  child: Lottie.asset("assets/images/anim_loading.json",
-                      repeat: true,
-                      frameRate: FrameRate.composition,
-                      width: 150,
-                      height: 150),
-                ),
-              );
-            }
-          }),
-          const Gap(28),
-          Container(
-            width: widthScreen,
-            color: Colors.blue.shade600,
-            padding: const EdgeInsets.all(25),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.center,
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Flexible(
-                    child: Text(
-                  "Want to collaborate together, contact me at:",
-                  textAlign: TextAlign.center,
-                  textScaler: TextScaler.linear(
-                      ResponsiveBreakpoints.of(context).isMobile ? 0.8 : 1),
-                  style: const TextStyle(
-                      fontSize: 24,
-                      color: Colors.white,
-                      fontWeight: FontWeight.w600),
-                )),
-                const Gap(16),
-                SizedBox(
-                  width: widthScreen,
-                  child: Wrap(
-                    alignment: WrapAlignment.center,
-                    runSpacing: 0,
-                    spacing: 0,
-                    children: [
-                      ...listing.map((item) => ItemContact(
-                          title: item.title,
-                          pathImage: item.iconLink,
-                          callback: () async {
-                            if (item.title == "email") {
-                              final Uri emailLaunchUri = Uri(
-                                scheme: 'mailto',
-                                path: 'suhaili.faruq01@gmail.com',
-                                queryParameters: {
-                                  'subject': 'Invitation ...',
-                                  'body': "Hi Faruq ..."
-                                },
-                              );
-                              await launchUrl(emailLaunchUri,
-                                  mode: LaunchMode.platformDefault);
-                            } else {
-                              await launchUrl(Uri.parse(item.link),
-                                  mode: LaunchMode.platformDefault);
-                            }
-                          }))
-                    ],
+              ),
+              const Gap(32),
+              ResponsiveGrid(
+                minItemWidth: 220,
+                maxColumns: 4,
+                children: [
+                  for (var i = 0; i < (_showAll ? projects.length : _initialCount.clamp(0, projects.length)); i++)
+                    ItemProject(model: projects[i], index: i),
+                ],
+              ),
+              if (projects.length > _initialCount) ...[
+                const Gap(40),
+                Center(
+                  child: PillButton(
+                    label: _showAll ? "Show fewer projects" : "Show all ${projects.length} projects",
+                    outlined: _showAll,
+                    onPressed: () => setState(() => _showAll = !_showAll),
                   ),
                 ),
-                const Gap(24),
-                Flexible(
-                    child: Text(
-                  "Handcraft by me@suhailifaruq_",
-                  textScaler: TextScaler.linear(
-                      ResponsiveBreakpoints.of(context).isMobile ? 0.8 : 1),
-                  style: const TextStyle(
-                      fontSize: 14,
-                      color: Colors.white,
-                      fontWeight: FontWeight.w600),
-                )),
-                const Gap(8),
-                Flexible(
-                    child: SizedBox(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Flexible(
-                          child: Image.asset(
-                        "assets/images/ic_flutter.png",
-                        width: 12,
-                        height: 12,
-                      )),
-                      const Gap(16),
-                      Flexible(
-                          child: Text(
-                        "Web build by Flutter",
-                        textScaler: TextScaler.linear(
-                            ResponsiveBreakpoints.of(context).isMobile
-                                ? 0.8
-                                : 1),
-                        style: const TextStyle(
-                            fontSize: 12,
-                            color: Colors.white,
-                            fontWeight: FontWeight.w700),
-                      )),
-                    ],
-                  ),
-                )),
               ],
-            ),
-          )
-        ],
-      ),
+            ]),
     );
   }
 }
