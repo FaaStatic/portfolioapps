@@ -1,23 +1,17 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myweb/model/response_model.dart';
 
 final instanceProviderFirebase = Provider<FirebaseFirestore>((ref) => FirebaseFirestore.instance);
-final instanceProviderFirebaseStorage =
-    Provider<FirebaseStorage>((ref) => FirebaseStorage.instance);
 
 final repoProvider = Provider<RepositoryData>((ref) {
-  return RepositoryData(
-      instance: ref.read(instanceProviderFirebase),
-      instance2: ref.read(instanceProviderFirebaseStorage));
+  return RepositoryData(instance: ref.read(instanceProviderFirebase));
 });
 
 class RepositoryData {
   final FirebaseFirestore instance;
-  final FirebaseStorage instance2;
 
-  const RepositoryData({required this.instance, required this.instance2});
+  const RepositoryData({required this.instance});
 
   Future<ResponseModel?> getprojectData() async {
     CollectionReference dataProject = instance.collection("project_work");
@@ -35,11 +29,9 @@ class RepositoryData {
     return ResponseModel(data: dataResponse.docChanges, status: 200);
   }
 
+  /// Resume link (Google Drive) kept in profile/resume.url so it can change without a redeploy.
   Future<String> downloadResume() async {
-    final refData = await instance2
-        .refFromURL("gs://portfolioweb-55f91.appspot.com/resume.pdf")
-        .getDownloadURL();
-    print(refData);
-    return refData;
+    final doc = await instance.collection("profile").doc("resume").get();
+    return doc.data()?["url"] as String? ?? "";
   }
 }

@@ -1,4 +1,4 @@
-// Replaces experience_work and project_work in Firestore with firestore/seed.json.
+// Replaces experience_work, project_work, and profile in Firestore with firestore/seed.json.
 // Dry run by default; pass --apply to write.
 //   FIRESTORE_TOKEN=$(gcloud auth print-access-token) bun firestore/seed.ts --apply
 import seed from "./seed.json";
