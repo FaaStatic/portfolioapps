@@ -31,7 +31,6 @@ dependencies:
   cloud_firestore: ^4.13.6
   colorful_iconify_flutter: ^0.0.5
   cupertino_icons: ^1.0.2
-  dotted_border: ^2.1.0
   firebase_core: ^2.24.2
   firebase_storage: ^11.7.7
   flutter:
@@ -47,7 +46,6 @@ dependencies:
   lottie: ^2.7.0
   responsive_framework: ^1.1.1
   url_launcher: ^6.2.2
-  visibility_detector: ^0.4.0+2
 
 dev_dependencies:
   flutter_lints: ^2.0.0

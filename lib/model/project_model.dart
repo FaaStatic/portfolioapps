@@ -43,5 +43,5 @@ class ProjectModel {
       isPrivate: json["is_private"] == true);
 
   String get period =>
-      startProject == endProject ? startProject ?? "" :"${startProject ?? ""} – ${endProject ?? ""}";
+      startProject == endProject ? startProject ?? "" : "${startProject ?? ""} – ${endProject ?? ""}";
 }

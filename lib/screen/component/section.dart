@@ -98,11 +98,11 @@ class Section extends StatelessWidget {
 class ResponsiveGrid extends StatelessWidget {
   final double minItemWidth;
   final int maxColumns;
-  final double spacing;
   final List<Widget> children;
 
-  const ResponsiveGrid(
-      {super.key, required this.minItemWidth, required this.maxColumns, this.spacing = 24, required this.children});
+  static const spacing = 24.0;
+
+  const ResponsiveGrid({super.key, required this.minItemWidth, required this.maxColumns, required this.children});
 
   @override
   Widget build(BuildContext context) {
@@ -116,7 +116,7 @@ class ResponsiveGrid extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               for (var i = 0; i < columns; i++) ...[
-                if (i > 0) Gap(spacing),
+                if (i > 0) const Gap(spacing),
                 Expanded(child: i < cells.length ? cells[i] : const SizedBox()),
               ],
             ],
@@ -125,7 +125,7 @@ class ResponsiveGrid extends StatelessWidget {
       }
       return Column(
         children: [
-          for (var i = 0; i < rows.length; i++) ...[if (i > 0) Gap(spacing * 1.5), rows[i]],
+          for (var i = 0; i < rows.length; i++) ...[if (i > 0) const Gap(spacing * 1.5), rows[i]],
         ],
       );
     });
@@ -176,15 +176,14 @@ class PillButton extends StatelessWidget {
 
 /// App-icon style tile that drifts up and down; [blur] pushes it into the background.
 class FloatingBadge extends StatefulWidget {
-  final String? asset;
-  final IconData? icon;
+  final String asset;
   final double size;
   final double blur;
   final double turns;
   final bool reverse;
 
   const FloatingBadge(
-      {super.key, this.asset, this.icon, this.size = 60, this.blur = 0, this.turns = 0, this.reverse = false});
+      {super.key, required this.asset, this.size = 60, this.blur = 0, this.turns = 0, this.reverse = false});
 
   @override
   State<FloatingBadge> createState() => _FloatingBadgeState();
@@ -225,23 +224,24 @@ class _FloatingBadgeState extends State<FloatingBadge> with SingleTickerProvider
             BoxShadow(color: Palette.heading.withValues(alpha: 0.16), blurRadius: size * 0.35, offset: Offset(0, size * 0.15))
           ],
         ),
-        child: widget.asset != null
-            ? Image.asset(widget.asset!)
-            : Icon(widget.icon, color: Palette.primary, size: size * 0.55),
+        child: Image.asset(widget.asset),
       ),
     );
     if (widget.blur > 0) {
       tile = ImageFiltered(imageFilter: ImageFilter.blur(sigmaX: widget.blur, sigmaY: widget.blur), child: tile);
     }
 
+    // The drift repaints every frame; the boundaries keep that off the page and reuse the blurred tile raster.
     return ExcludeSemantics(
-      child: AnimatedBuilder(
-        animation: _drift,
-        builder: (context, child) {
-          final offset = (Curves.easeInOut.transform(_drift.value) - 0.5) * 14;
-          return Transform.translate(offset: Offset(0, widget.reverse ? -offset : offset), child: child);
-        },
-        child: tile,
+      child: RepaintBoundary(
+        child: AnimatedBuilder(
+          animation: _drift,
+          builder: (context, child) {
+            final offset = (Curves.easeInOut.transform(_drift.value) - 0.5) * 14;
+            return Transform.translate(offset: Offset(0, widget.reverse ? -offset : offset), child: child);
+          },
+          child: RepaintBoundary(child: tile),
+        ),
       ),
     );
   }

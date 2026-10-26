@@ -25,7 +25,8 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
   final _projectsKey = GlobalKey();
   final _contactKey = GlobalKey();
   final _scroll = ScrollController();
-  int _activeSection = 0;
+  // Only the nav listens; a setState here would rebuild every section mid-scroll.
+  final _activeSection = ValueNotifier(0);
 
   late final _sectionKeys = [_homeKey, _aboutKey, _skillsKey, _experienceKey, _projectsKey, _contactKey];
 
@@ -42,6 +43,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
   @override
   void dispose() {
     _scroll.dispose();
+    _activeSection.dispose();
     super.dispose();
   }
 
@@ -54,7 +56,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
       if (box != null && box.attached && box.localToGlobal(Offset.zero).dy <= threshold) active = i;
     }
     if (_scroll.position.extentAfter < 8) active = _sectionKeys.length - 1;
-    if (active != _activeSection) setState(() => _activeSection = active);
+    _activeSection.value = active;
   }
 
   void _scrollTo(GlobalKey key) {
@@ -82,8 +84,11 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
         children: [
           Column(
             children: [
-              HeadBar(
-                  links: {for (final section in sections) section.label: section.onTap}, activeIndex: _activeSection),
+              ValueListenableBuilder(
+                valueListenable: _activeSection,
+                builder: (context, active, _) => HeadBar(
+                    links: {for (final section in sections) section.label: section.onTap}, activeIndex: active),
+              ),
               Expanded(
                 child: SelectionArea(
                   child: SingleChildScrollView(
@@ -117,7 +122,10 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
               left: 0,
               right: 0,
               bottom: 0,
-              child: FloatingNav(items: sections, activeIndex: _activeSection),
+              child: ValueListenableBuilder(
+                valueListenable: _activeSection,
+                builder: (context, active, _) => FloatingNav(items: sections, activeIndex: active),
+              ),
             ),
         ],
       ),
