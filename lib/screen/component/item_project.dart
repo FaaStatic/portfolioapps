@@ -21,6 +21,7 @@ class ItemProject extends StatelessWidget {
     RegExp(r'\btensorflow\b'): Logos.tensorflow,
     RegExp(r'\bjava\b'): Logos.java,
     RegExp(r'\bgo\b'): Logos.go,
+    RegExp(r'\bcodeigniter\b'): Logos.codeigniter_icon,
   };
 
   String? get _logo {
