@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myweb/provider/provider_download.dart';
 import 'package:myweb/screen/component/floating_nav.dart';
 import 'package:myweb/screen/component/head_bar.dart';
+import 'package:myweb/screen/component/splash_overlay.dart';
 import 'package:myweb/screen/page/about_screen.dart';
 import 'package:myweb/screen/page/contact_screen.dart';
 import 'package:myweb/screen/page/experience_screen.dart';
@@ -24,6 +25,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
   final _experienceKey = GlobalKey();
   final _projectsKey = GlobalKey();
   final _contactKey = GlobalKey();
+  final _headerLogoKey = GlobalKey();
   final _scroll = ScrollController();
   // Only the nav listens; a setState here would rebuild every section mid-scroll.
   final _activeSection = ValueNotifier(0);
@@ -79,59 +81,64 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
       (label: "Contact", icon: Icons.mail_rounded, onTap: () => _scrollTo(_contactKey)),
     ];
 
-    return Scaffold(
-      body: Stack(
-        children: [
-          Column(
-            children: [
-              ValueListenableBuilder(
-                valueListenable: _activeSection,
-                builder: (context, active, _) => HeadBar(
-                    links: {for (final section in sections) section.label: section.onTap}, activeIndex: active),
-              ),
-              Expanded(
-                child: SelectionArea(
-                  child: SingleChildScrollView(
-                    controller: _scroll,
-                    child: Column(
-                      children: [
-                        // Without a boundary per section, every scroll frame re-records the whole page.
-                        for (final section in [
-                          HeroSection(key: _homeKey, onContact: () => _scrollTo(_contactKey)),
-                          AboutSection(key: _aboutKey, onMore: () => _scrollTo(_experienceKey)),
-                          SkillsSection(key: _skillsKey),
-                          ExperienceScreen(key: _experienceKey),
-                          ProjectScreen(key: _projectsKey),
-                          ContactSection(key: _contactKey),
-                          FooterSection(links: {
-                            "About Me": () => _scrollTo(_aboutKey),
-                            "My Skills": () => _scrollTo(_skillsKey),
-                            "My Experience": () => _scrollTo(_experienceKey),
-                            "My Projects": () => _scrollTo(_projectsKey),
-                            "Contact Me": () => _scrollTo(_contactKey),
-                          }),
-                        ])
-                          RepaintBoundary(child: section),
-                        // Keeps the footer clear of the floating bottom bar.
-                        if (!isDesktop) const SizedBox(height: 96),
-                      ],
+    return SplashOverlay(
+      logoKey: _headerLogoKey,
+      child: Scaffold(
+        body: Stack(
+          children: [
+            Column(
+              children: [
+                ValueListenableBuilder(
+                  valueListenable: _activeSection,
+                  builder: (context, active, _) => HeadBar(
+                      links: {for (final section in sections) section.label: section.onTap},
+                      activeIndex: active,
+                      logoKey: _headerLogoKey),
+                ),
+                Expanded(
+                  child: SelectionArea(
+                    child: SingleChildScrollView(
+                      controller: _scroll,
+                      child: Column(
+                        children: [
+                          // Without a boundary per section, every scroll frame re-records the whole page.
+                          for (final section in [
+                            HeroSection(key: _homeKey, onContact: () => _scrollTo(_contactKey)),
+                            AboutSection(key: _aboutKey, onMore: () => _scrollTo(_experienceKey)),
+                            SkillsSection(key: _skillsKey),
+                            ExperienceScreen(key: _experienceKey),
+                            ProjectScreen(key: _projectsKey),
+                            ContactSection(key: _contactKey),
+                            FooterSection(links: {
+                              "About Me": () => _scrollTo(_aboutKey),
+                              "My Skills": () => _scrollTo(_skillsKey),
+                              "My Experience": () => _scrollTo(_experienceKey),
+                              "My Projects": () => _scrollTo(_projectsKey),
+                              "Contact Me": () => _scrollTo(_contactKey),
+                            }),
+                          ])
+                            RepaintBoundary(child: section),
+                          // Keeps the footer clear of the floating bottom bar.
+                          if (!isDesktop) const SizedBox(height: 96),
+                        ],
+                      ),
                     ),
                   ),
                 ),
-              ),
-            ],
-          ),
-          if (!isDesktop)
-            Positioned(
-              left: 0,
-              right: 0,
-              bottom: 0,
-              child: ValueListenableBuilder(
-                valueListenable: _activeSection,
-                builder: (context, active, _) => FloatingNav(items: sections, activeIndex: active),
-              ),
+              ],
             ),
-        ],
+            if (!isDesktop)
+              Positioned(
+                left: 0,
+                right: 0,
+                bottom: 0,
+                child: ValueListenableBuilder(
+                  valueListenable: _activeSection,
+                  builder: (context, active, _) => FloatingNav(items: sections, activeIndex: active),
+                ),
+              ),
+          ],
+        ),
       ),
     );
   }

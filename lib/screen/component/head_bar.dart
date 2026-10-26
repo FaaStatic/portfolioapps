@@ -13,7 +13,10 @@ class HeadBar extends ConsumerWidget {
   /// Index into [links] of the section currently on screen.
   final int activeIndex;
 
-  const HeadBar({super.key, required this.links, this.activeIndex = 0});
+  /// Lets the splash measure where its logo should land.
+  final GlobalKey? logoKey;
+
+  const HeadBar({super.key, required this.links, this.activeIndex = 0, this.logoKey});
 
   Future<void> _openResume(WidgetRef ref) async {
     final ready = ref.read(providerDownloadData).isNotEmpty;
@@ -39,7 +42,7 @@ class HeadBar extends ConsumerWidget {
                 InkWell(
                   onTap: links.values.first,
                   child: Image.asset("assets/images/logo.webp",
-                      height: isDesktop ? 46 : 38, semanticLabel: "Suhaili Faruq, back to top"),
+                      key: logoKey, height: isDesktop ? 46 : 38, semanticLabel: "Suhaili Faruq, back to top"),
                 ),
                 if (isDesktop) ...[
                   Expanded(

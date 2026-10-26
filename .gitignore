@@ -44,3 +44,6 @@ app.*.map.json
 
 # Local Firestore seed data and backups
 firestore/
+
+# Firebase CLI deploy cache
+.firebase/
