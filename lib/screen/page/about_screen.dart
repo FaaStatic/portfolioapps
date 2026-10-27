@@ -42,7 +42,7 @@ class HeroSection extends StatelessWidget {
     return Section(
       floating: const [
         Positioned(left: 56, top: 120, child: FloatingBadge(asset: "assets/images/ic_firebase.webp", size: 70, dim: true, turns: -0.05)),
-        Positioned(left: 96, bottom: 40, child: FloatingBadge(asset: "assets/images/ic_typescript.webp", size: 56, dim: true, turns: 0.05, reverse: true)),
+        Positioned(left: 96, bottom: 40, child: FloatingBadge(asset: "assets/images/ic_typescript.webp", size: 56, dim: true, turns: 0.05)),
       ],
       child: isDesktop
           ? Row(children: [
@@ -85,7 +85,7 @@ class _HeroPortrait extends StatelessWidget {
             child: FloatingBadge(asset: "assets/images/ic_react_native.webp", size: badge, turns: -0.04)),
         Align(
             alignment: const Alignment(0.92, -0.92),
-            child: FloatingBadge(asset: "assets/images/ic_flutter.webp", size: badge, turns: 0.05, reverse: true)),
+            child: FloatingBadge(asset: "assets/images/ic_flutter.webp", size: badge, turns: 0.05)),
         Align(
             alignment: const Alignment(1.0, 0.62),
             child: FloatingBadge(asset: "assets/images/ic_kotlin.webp", size: badge, turns: -0.05)),
@@ -184,7 +184,7 @@ class _AboutPortrait extends StatelessWidget {
         Positioned(
             left: height * 0.04,
             top: height * 0.02,
-            child: FloatingBadge(asset: "assets/images/ic_android.webp", size: height * 0.11, turns: -0.04, reverse: true)),
+            child: FloatingBadge(asset: "assets/images/ic_android.webp", size: height * 0.11, turns: -0.04)),
       ]),
     );
   }

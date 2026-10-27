@@ -97,7 +97,7 @@ class _ContactPortrait extends StatelessWidget {
             child: FloatingBadge(asset: "assets/images/ic_flutter.webp", size: badge, turns: 0.03)),
         Align(
             alignment: const Alignment(1.0, -0.75),
-            child: FloatingBadge(asset: "assets/images/ic_react_native.webp", size: badge, turns: 0.06, reverse: true)),
+            child: FloatingBadge(asset: "assets/images/ic_react_native.webp", size: badge, turns: 0.06)),
       ]),
     );
   }

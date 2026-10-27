@@ -18,6 +18,19 @@ publish_to: "none" # Remove this line if you wish to publish to pub.dev
 # of the product and file versions while build-number is used as the build suffix.
 version: 1.0.0+1
 
+scripts:
+  # Run a basic command: 'rps clean'
+  clean: "flutter clean && flutter pub get"
+
+  # Nested commands: 'rps build android' or 'rps build ios'
+  build:
+    web: "flutter build web --release"
+
+  run:web: "flutter run -d chrome --web-port 5591"
+    
+  deploy: "flutter build web --release && firebase deploy --only hosting"
+    
+
 environment:
   sdk: ">=3.2.3 <4.0.0"
 
@@ -105,3 +118,4 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
+

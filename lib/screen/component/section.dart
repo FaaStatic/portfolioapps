@@ -173,95 +173,38 @@ class PillButton extends StatelessWidget {
   }
 }
 
-/// App-icon style tile that drifts up and down; [dim] pushes it into the background.
-class FloatingBadge extends StatefulWidget {
+/// App-icon style tile; [dim] pushes it into the background.
+/// Static on purpose: Flutter web redraws the whole visible scene for every animated frame, so a looping
+/// drift kept the main thread busy nonstop, which Safari and Firefox turned into scroll jank.
+class FloatingBadge extends StatelessWidget {
   final String asset;
   final double size;
   final bool dim;
   final double turns;
-  final bool reverse;
 
-  const FloatingBadge(
-      {super.key, required this.asset, this.size = 60, this.dim = false, this.turns = 0, this.reverse = false});
-
-  @override
-  State<FloatingBadge> createState() => _FloatingBadgeState();
-}
-
-class _FloatingBadgeState extends State<FloatingBadge> with SingleTickerProviderStateMixin {
-  late final AnimationController _drift = AnimationController(vsync: this, duration: const Duration(milliseconds: 3200));
-  ScrollPosition? _scroll;
-  bool _reduceMotion = false;
-  double _viewportHeight = 0;
-
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    _reduceMotion = MediaQuery.disableAnimationsOf(context);
-    _viewportHeight = MediaQuery.sizeOf(context).height;
-    final scroll = Scrollable.maybeOf(context)?.position;
-    if (scroll != _scroll) {
-      _scroll?.removeListener(_syncDrift);
-      _scroll = scroll?..addListener(_syncDrift);
-    }
-    WidgetsBinding.instance.addPostFrameCallback((_) => _syncDrift());
-  }
-
-  @override
-  void dispose() {
-    _scroll?.removeListener(_syncDrift);
-    _drift.dispose();
-    super.dispose();
-  }
-
-  /// Every section is built up front in one scroll view, so offscreen badges would otherwise tick forever
-  /// and keep the page from ever going idle.
-  void _syncDrift() {
-    final box = mounted ? context.findRenderObject() as RenderBox? : null;
-    if (box == null || !box.hasSize) return;
-    final top = box.localToGlobal(Offset.zero).dy;
-    final onScreen = top < _viewportHeight && top + box.size.height > 0;
-    if (_reduceMotion || !onScreen) {
-      _drift.stop();
-    } else if (!_drift.isAnimating) {
-      _drift.repeat(reverse: true);
-    }
-  }
+  const FloatingBadge({super.key, required this.asset, this.size = 60, this.dim = false, this.turns = 0});
 
   @override
   Widget build(BuildContext context) {
-    final size = widget.size;
-    final tile = Transform.rotate(
-      angle: widget.turns * 2 * math.pi,
-      child: Container(
-        width: size,
-        height: size,
-        padding: EdgeInsets.all(size * 0.2),
-        decoration: BoxDecoration(
-          color: Colors.white.withValues(alpha: widget.dim ? 0.6 : 1),
-          borderRadius: BorderRadius.circular(size * 0.28),
-          boxShadow: [
-            BoxShadow(
-                color: Palette.heading.withValues(alpha: widget.dim ? 0.08 : 0.16),
-                blurRadius: size * 0.35,
-                offset: Offset(0, size * 0.15))
-          ],
-        ),
-        // Fading the image as it draws avoids the offscreen layer a blur or Opacity widget would need every frame.
-        child: Image.asset(widget.asset, opacity: widget.dim ? const AlwaysStoppedAnimation(0.55) : null),
-      ),
-    );
-
-    // The drift repaints every frame; the boundary keeps that from re-recording the whole section.
     return ExcludeSemantics(
-      child: RepaintBoundary(
-        child: AnimatedBuilder(
-          animation: _drift,
-          builder: (context, child) {
-            final offset = (Curves.easeInOut.transform(_drift.value) - 0.5) * 14;
-            return Transform.translate(offset: Offset(0, widget.reverse ? -offset : offset), child: child);
-          },
-          child: tile,
+      child: Transform.rotate(
+        angle: turns * 2 * math.pi,
+        child: Container(
+          width: size,
+          height: size,
+          padding: EdgeInsets.all(size * 0.2),
+          decoration: BoxDecoration(
+            color: Colors.white.withValues(alpha: dim ? 0.6 : 1),
+            borderRadius: BorderRadius.circular(size * 0.28),
+            boxShadow: [
+              BoxShadow(
+                  color: Palette.heading.withValues(alpha: dim ? 0.08 : 0.16),
+                  blurRadius: size * 0.35,
+                  offset: Offset(0, size * 0.15))
+            ],
+          ),
+          // Fading the image as it draws avoids the offscreen layer an Opacity widget would need.
+          child: Image.asset(asset, opacity: dim ? const AlwaysStoppedAnimation(0.55) : null),
         ),
       ),
     );
