@@ -15,7 +15,8 @@ TextStyle displayStyle(BuildContext context, {double desktop = 52, double mobile
     fontWeight: FontWeight.w900,
     color: Palette.heading);
 
-const eyebrowStyle = TextStyle(fontSize: 16, fontWeight: FontWeight.w700, color: Palette.primary);
+// Palette.primary is 4.36:1 on the background, under AA for 16px text.
+const eyebrowStyle = TextStyle(fontSize: 16, fontWeight: FontWeight.w700, color: Palette.heading);
 
 /// Centers content at [maxContentWidth]. [panel] draws the tinted rounded block from the reference design;
 /// [floating] are Positioned decorations laid over the full page width, shown on desktop only.

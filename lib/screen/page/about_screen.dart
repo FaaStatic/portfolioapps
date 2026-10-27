@@ -98,11 +98,12 @@ class _HeroPortrait extends StatelessWidget {
 
 // Shown until profile/about.summary loads, and if that doc is missing.
 const _aboutFallback =
-    "I'm a mobile engineer with 5 years of shipping React Native, Flutter, and Kotlin apps, now building with Go and React too. "
-    "At United Tractors I built COIP from scratch: an offline-first inspection app that replaced paper checksheets at mining sites "
-    "and handles 100+ jobs a month. Before that I shipped six apps at Nexanet, including ForYou, rated 4.8 with 10K+ downloads. "
-    "Today I build POS features end to end at REDDOG, from Go APIs to React apps. I use Claude Code to plan, test, and debug, "
-    "so I ship faster without skipping checks.";
+    "Hey again! I'm Faruq, a mobile engineer with 5 years in React Native, Flutter, and Kotlin. "
+    "My favorite project so far is COIP, an app I built from scratch at United Tractors: customers inspect heavy equipment "
+    "at mining sites with no signal and sync once they're back at the office. They run 100+ jobs a month on it instead of "
+    "paper checksheets. Before that I shipped six apps at Nexanet, including ForYou, which holds 4.8 stars and 10K+ downloads. "
+    "These days I'm at REDDOG, building POS features from the Go API to the React screen. "
+    "I plan, test, and debug with Claude Code, so I ship fast without skipping tests.";
 
 class AboutSection extends ConsumerWidget {
   final VoidCallback onMore;
