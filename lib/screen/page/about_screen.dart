@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
 import 'package:myweb/helper/palette.dart';
+import 'package:myweb/model/about_model.dart';
 import 'package:myweb/repository/repository_data.dart';
 import 'package:myweb/screen/component/section.dart';
 import 'package:responsive_framework/responsive_framework.dart';
@@ -96,15 +97,6 @@ class _HeroPortrait extends StatelessWidget {
   }
 }
 
-// Shown until profile/about.summary loads, and if that doc is missing.
-const _aboutFallback =
-    "Hey again! I'm Faruq, a mobile engineer with 5 years in React Native, Flutter, and Kotlin. "
-    "My favorite project so far is COIP, an app I built from scratch at United Tractors: customers inspect heavy equipment "
-    "at mining sites with no signal and sync once they're back at the office. They run 100+ jobs a month on it instead of "
-    "paper checksheets. Before that I shipped six apps at Nexanet, including ForYou, which holds 4.8 stars and 10K+ downloads. "
-    "These days I'm at REDDOG, building POS features from the Go API to the React screen. "
-    "I plan, test, and debug with Claude Code, so I ship fast without skipping tests.";
-
 class AboutSection extends ConsumerWidget {
   final VoidCallback onMore;
   const AboutSection({super.key, required this.onMore});
@@ -112,24 +104,21 @@ class AboutSection extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final isDesktop = ResponsiveBreakpoints.of(context).isDesktop;
-    final summary = ref.watch(aboutSummaryProvider).valueOrNull ?? _aboutFallback;
+    final about = ref.watch(aboutProvider).valueOrNull ?? AboutModel.fallback;
     const paragraph = TextStyle(fontFamily: bodyFont, fontSize: 17, height: 1.7, fontWeight: FontWeight.w500, color: Palette.body);
 
     final story = Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Text("ABOUT MYSELF", style: eyebrowStyle),
+        Text(about.eyebrow, style: eyebrowStyle),
         const Gap(10),
-        Text("Know About Me\nIn Detail", style: displayStyle(context)),
+        Text(about.title, style: displayStyle(context)),
         const Gap(20),
-        Text(summary, style: paragraph),
+        Text(about.summary, style: paragraph),
         const Gap(24),
-        const _ContactLine(icon: Icons.location_on, label: "Kotawaringin Barat, Indonesia"),
-        _ContactLine(icon: Icons.phone, label: "+62 857-1356-1437", uri: Uri(scheme: "tel", path: "+6285713561437")),
-        _ContactLine(
-            icon: Icons.email,
-            label: "suhaili.faruq01@gmail.com",
-            uri: Uri(scheme: "mailto", path: "suhaili.faruq01@gmail.com")),
+        _ContactLine(icon: Icons.location_on, label: about.location),
+        _ContactLine(icon: Icons.phone, label: about.phone, uri: about.phoneUri),
+        _ContactLine(icon: Icons.email, label: about.email, uri: Uri(scheme: "mailto", path: about.email)),
         const Gap(32),
         PillButton(label: "See My Experience", onPressed: onMore),
       ],

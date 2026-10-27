@@ -1,35 +1,35 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
 import 'package:myweb/helper/palette.dart';
+import 'package:myweb/model/about_model.dart';
 import 'package:myweb/model/contact_model.dart';
+import 'package:myweb/repository/repository_data.dart';
 import 'package:myweb/screen/component/item_contact.dart';
 import 'package:myweb/screen/component/section.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-const _emailAddress = "suhaili.faruq01@gmail.com";
-final _email = Uri(scheme: "mailto", path: _emailAddress, query: "subject=${Uri.encodeComponent("Let's work together")}");
+Uri _emailUri(String address) =>
+    Uri(scheme: "mailto", path: address, query: "subject=${Uri.encodeComponent("Let's work together")}");
 
 final _designReference = Uri.parse("https://dribbble.com/shots/26851273-Graphics-Designer-Portfolio-Design");
 
-const _socials = [
-  ContactModel(title: "GitHub", iconLink: "assets/images/ic_github.svg", link: "https://github.com/FaaStatic"),
-  ContactModel(
-      title: "LinkedIn",
-      iconLink: "assets/images/ic_linkedin.svg",
-      link: "https://www.linkedin.com/in/suhaili-faruq-8475a0189/"),
-  ContactModel(title: "WhatsApp", iconLink: "assets/images/ic_wa.svg", link: "https://wa.me/6285713561437"),
-  ContactModel(title: "Telegram", iconLink: "assets/images/ic_tele.svg", link: "https://t.me/suhailifaruq"),
-  ContactModel(
-      title: "Instagram", iconLink: "assets/images/ic_ig.svg", link: "https://www.instagram.com/suhailifaruq_/"),
-];
+List<ContactModel> _socials(AboutModel about) => [
+      ContactModel(title: "GitHub", iconLink: "assets/images/ic_github.svg", link: about.github),
+      ContactModel(title: "LinkedIn", iconLink: "assets/images/ic_linkedin.svg", link: about.linkedin),
+      ContactModel(title: "WhatsApp", iconLink: "assets/images/ic_wa.svg", link: about.whatsapp),
+      ContactModel(title: "Telegram", iconLink: "assets/images/ic_tele.svg", link: about.telegram),
+      ContactModel(title: "Instagram", iconLink: "assets/images/ic_ig.svg", link: about.instagram),
+    ];
 
-class ContactSection extends StatelessWidget {
+class ContactSection extends ConsumerWidget {
   const ContactSection({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final isDesktop = ResponsiveBreakpoints.of(context).isDesktop;
+    final about = ref.watch(aboutProvider).valueOrNull ?? AboutModel.fallback;
 
     final pitch = Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -44,7 +44,7 @@ class ContactSection extends StatelessWidget {
             "Email is the fastest way to reach me.",
             style: TextStyle(fontFamily: bodyFont, fontSize: 16, height: 1.6, fontWeight: FontWeight.w500, color: Palette.body)),
         const Gap(36),
-        PillButton(label: "Contact Me Now", onPressed: () => launchUrl(_email)),
+        PillButton(label: "Contact Me Now", onPressed: () => launchUrl(_emailUri(about.email))),
       ],
     );
 
@@ -103,13 +103,14 @@ class _ContactPortrait extends StatelessWidget {
   }
 }
 
-class FooterSection extends StatelessWidget {
+class FooterSection extends ConsumerWidget {
   final Map<String, VoidCallback> links;
   const FooterSection({super.key, required this.links});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final isDesktop = ResponsiveBreakpoints.of(context).isDesktop;
+    final about = ref.watch(aboutProvider).valueOrNull ?? AboutModel.fallback;
     const heading = TextStyle(fontSize: 22, fontWeight: FontWeight.w800, color: Palette.heading);
     const item = TextStyle(fontFamily: bodyFont, fontSize: 15, height: 1.9, fontWeight: FontWeight.w500, color: Palette.body);
 
@@ -119,10 +120,10 @@ class FooterSection extends StatelessWidget {
       const Text("\"Offline-first apps, online-first attitude. Mobile engineer from Kotawaringin Barat.\"",
           style: TextStyle(fontFamily: bodyFont, fontSize: 15, height: 1.6, fontWeight: FontWeight.w500, color: Palette.body)),
       const Gap(20),
-      _EmailPill(),
+      _EmailPill(email: about.email),
       const Gap(16),
       Wrap(children: [
-        for (final social in _socials)
+        for (final social in _socials(about))
           Tooltip(
             message: social.title,
             child: ItemContact(
@@ -131,12 +132,12 @@ class FooterSection extends StatelessWidget {
       ]),
     ]);
 
-    const address = Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-      Text("Address", style: heading),
-      Gap(14),
-      Text("+62 857-1356-1437", style: item),
-      Text(_emailAddress, style: item),
-      Text("Kotawaringin Barat, Indonesia", style: item),
+    final address = Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+      const Text("Address", style: heading),
+      const Gap(14),
+      Text(about.phone, style: item),
+      Text(about.email, style: item),
+      Text(about.location, style: item),
     ]);
 
     final pages = Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
@@ -153,7 +154,7 @@ class FooterSection extends StatelessWidget {
             const Gap(56),
             Expanded(flex: 4, child: brand),
             const Gap(64),
-            const Expanded(flex: 3, child: Padding(padding: EdgeInsets.only(top: 20), child: address)),
+            Expanded(flex: 3, child: Padding(padding: const EdgeInsets.only(top: 20), child: address)),
             const Gap(32),
             Expanded(flex: 2, child: pages),
           ])
@@ -205,6 +206,9 @@ class FooterSection extends StatelessWidget {
 
 /// The reference's newsletter field, repurposed: shows the address and opens an email.
 class _EmailPill extends StatelessWidget {
+  final String email;
+  const _EmailPill({required this.email});
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -216,12 +220,12 @@ class _EmailPill extends StatelessWidget {
         boxShadow: [BoxShadow(color: Palette.heading.withValues(alpha: 0.08), blurRadius: 24, offset: const Offset(0, 8))],
       ),
       child: Row(children: [
-        const Expanded(
-          child: Text(_emailAddress,
+        Expanded(
+          child: Text(email,
               overflow: TextOverflow.ellipsis,
-              style: TextStyle(fontFamily: bodyFont, fontSize: 14, fontWeight: FontWeight.w600, color: Palette.body)),
+              style: const TextStyle(fontFamily: bodyFont, fontSize: 14, fontWeight: FontWeight.w600, color: Palette.body)),
         ),
-        PillButton(label: "Email Me", onPressed: () => launchUrl(_email)),
+        PillButton(label: "Email Me", onPressed: () => launchUrl(_emailUri(email))),
       ]),
     );
   }

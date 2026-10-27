@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:myweb/model/about_model.dart';
 import 'package:myweb/model/response_model.dart';
 
 final instanceProviderFirebase = Provider<FirebaseFirestore>((ref) => FirebaseFirestore.instance);
@@ -35,11 +36,12 @@ class RepositoryData {
     return doc.data()?["url"] as String? ?? "";
   }
 
-  /// About paragraph kept in profile/about.summary so it can change without a redeploy.
-  Future<String?> getAboutSummary() async {
+  /// About section copy kept in profile/about so it can change without a redeploy.
+  Future<Map<String, dynamic>> getAbout() async {
     final doc = await instance.collection("profile").doc("about").get();
-    return doc.data()?["summary"] as String?;
+    return doc.data() ?? {};
   }
 }
 
-final aboutSummaryProvider = FutureProvider<String?>((ref) => ref.read(repoProvider).getAboutSummary());
+final aboutProvider =
+    FutureProvider<AboutModel>((ref) async => AboutModel.fromJson(await ref.read(repoProvider).getAbout()));
