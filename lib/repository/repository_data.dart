@@ -34,4 +34,12 @@ class RepositoryData {
     final doc = await instance.collection("profile").doc("resume").get();
     return doc.data()?["url"] as String? ?? "";
   }
+
+  /// About paragraph kept in profile/about.summary so it can change without a redeploy.
+  Future<String?> getAboutSummary() async {
+    final doc = await instance.collection("profile").doc("about").get();
+    return doc.data()?["summary"] as String?;
+  }
 }
+
+final aboutSummaryProvider = FutureProvider<String?>((ref) => ref.read(repoProvider).getAboutSummary());

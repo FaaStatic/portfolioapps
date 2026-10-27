@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
 import 'package:myweb/helper/palette.dart';
+import 'package:myweb/repository/repository_data.dart';
 import 'package:myweb/screen/component/section.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -94,13 +96,22 @@ class _HeroPortrait extends StatelessWidget {
   }
 }
 
-class AboutSection extends StatelessWidget {
+// Shown until profile/about.summary loads, and if that doc is missing.
+const _aboutFallback =
+    "I'm a mobile engineer with 5 years of shipping React Native, Flutter, and Kotlin apps, now building with Go and React too. "
+    "At United Tractors I built COIP from scratch: an offline-first inspection app that replaced paper checksheets at mining sites "
+    "and handles 100+ jobs a month. Before that I shipped six apps at Nexanet, including ForYou, rated 4.8 with 10K+ downloads. "
+    "Today I build POS features end to end at REDDOG, from Go APIs to React apps. I use Claude Code to plan, test, and debug, "
+    "so I ship faster without skipping checks.";
+
+class AboutSection extends ConsumerWidget {
   final VoidCallback onMore;
   const AboutSection({super.key, required this.onMore});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final isDesktop = ResponsiveBreakpoints.of(context).isDesktop;
+    final summary = ref.watch(aboutSummaryProvider).valueOrNull ?? _aboutFallback;
     const paragraph = TextStyle(fontFamily: bodyFont, fontSize: 17, height: 1.7, fontWeight: FontWeight.w500, color: Palette.body);
 
     final story = Column(
@@ -110,12 +121,7 @@ class AboutSection extends StatelessWidget {
         const Gap(10),
         Text("Know About Me\nIn Detail", style: displayStyle(context)),
         const Gap(20),
-        const Text(
-            "I'm a mobile engineer with 4+ years building offline-first apps in React Native, Flutter, and Kotlin, "
-            "and 7 releases on the Play Store and App Store. I also build REST APIs in Go and Kotlin on PostgreSQL and Redis, "
-            "and I work full-stack on a production POS system at Reddog. I use Claude Code to plan, test, and debug, "
-            "so I ship features faster without skipping checks.",
-            style: paragraph),
+        Text(summary, style: paragraph),
         const Gap(24),
         const _ContactLine(icon: Icons.location_on, label: "Kotawaringin Barat, Indonesia"),
         _ContactLine(icon: Icons.phone, label: "+62 857-1356-1437", uri: Uri(scheme: "tel", path: "+6285713561437")),
