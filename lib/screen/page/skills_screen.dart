@@ -40,7 +40,7 @@ const _skills = [
       category: "Mobile",
       title: "React Native",
       logo: Logos.react,
-      text: "Expo and bare 0.87, New Architecture, Re.Pack, Nitro modules, TanStack Query, Zustand, NativeWind.",
+      text: "Expo and bare React Native, New Architecture, Re.Pack module federation, TanStack Query, Zustand, NativeWind.",
       tools: [
         _Tool("Expo", logo: Logos.expo_icon),
         _Tool("TanStack Query", logo: Logos.react_query_icon),
@@ -66,7 +66,7 @@ const _skills = [
       category: "Backend",
       title: "Go",
       logo: Logos.go,
-      text: "REST APIs with Fiber v3 and Gin, gRPC, GORM, Cobra CLI, and Swagger. Kafka and Elasticsearch at Reddog.",
+      text: "REST APIs with Fiber v3 and Gin, GORM, Cobra CLI, and Swagger. Gin and PostgreSQL in production at REDDOG.",
       tools: [
         _Tool("Fiber", asset: "assets/images/ic_fiber.webp", wide: true),
         _Tool("Gin", logo: Logos.gin),
@@ -76,8 +76,8 @@ const _skills = [
       category: "Web",
       title: "React & TypeScript",
       logo: Logos.typescript_icon,
-      text: "React with Redux Toolkit, React Router, Chart.js, and FullCalendar. Vite and TanStack Router at Reddog.",
-      tools: [_Tool("React", logo: Logos.react), _Tool("Vite", logo: Logos.vitejs), _Tool("Redux", logo: Logos.redux)]),
+      text: "React with Redux Toolkit, React Router, Chart.js, and FullCalendar, plus React screens on the REDDOG POS.",
+      tools: [_Tool("React", logo: Logos.react), _Tool("Redux", logo: Logos.redux)]),
   _Skill(
       category: "Data",
       title: "Database",
@@ -94,7 +94,7 @@ const _skills = [
       category: "Practice",
       title: "Architecture",
       icon: Icons.account_tree_rounded,
-      text: "Clean Architecture, MVVM, offline-first sync, Module Federation, and Nx and Melos monorepos."),
+      text: "Clean Architecture, MVVM, offline-first sync, Module Federation, and Melos monorepos."),
   _Skill(
       category: "Practice",
       title: "Performance",
@@ -109,8 +109,7 @@ const _skills = [
       category: "Practice",
       title: "Testing",
       logo: Logos.jest,
-      text: "Jest, React Native Testing Library, and Mockito. 100+ unit and UI tests on COIP Mobile.",
-      tools: [_Tool("Testing Library", logo: Logos.testing_library)]),
+      text: "Jest unit tests on COIP Mobile. Go testing and flutter_test with 130+ test files and CI on Shop POS."),
   _Skill(
       category: "Tooling",
       title: "DevOps & Release",
