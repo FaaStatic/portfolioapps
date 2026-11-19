@@ -99,7 +99,7 @@ const _skills = [
       category: "Practice",
       title: "Performance",
       icon: Icons.speed_rounded,
-      text: "Startup and bundle optimization, memoization, lazy loading and pagination, FlashList, query cache tuning."),
+      text: "Cursor pagination and indexing for faster list screens, FlashList, and TanStack Query caching."),
   _Skill(
       category: "Practice",
       title: "Mobile Security",
@@ -114,7 +114,8 @@ const _skills = [
       category: "Tooling",
       title: "DevOps & Release",
       logo: Logos.docker_icon,
-      text: "Docker Compose, Nginx on a Linux VPS, Git, Azure DevOps, JIRA. Firebase FCM, Crashlytics, and Analytics. "
+      text: "Working knowledge of Docker Compose, Nginx, and Certbot on a self-managed Linux VPS, GitHub Actions CI/CD, "
+          "and Grafana + Loki logs. Azure DevOps and JIRA at work. Firebase FCM, Crashlytics, and Analytics. "
           "Play Store and App Store releases.",
       tools: [
         _Tool("Nginx", logo: Logos.nginx),
@@ -126,8 +127,8 @@ const _skills = [
       category: "Tooling",
       title: "AI-Assisted Dev",
       icon: Icons.auto_awesome_rounded,
-      text: "Claude Code to plan changes, implement against tests, run checks, and trace bugs to the root cause. "
-          "A CLAUDE.md per repo, Context7 docs, and hooks."),
+      text: "Claude Code to plan changes, trace bugs to the root cause, and run checks, with a CLAUDE.md per repo, "
+          "Context7 docs, and hooks. I review and test every change myself."),
 ];
 
 class SkillsSection extends StatelessWidget {

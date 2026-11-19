@@ -29,9 +29,9 @@ class AboutModel {
       eyebrow: json["eyebrow"] as String? ?? "ABOUT MYSELF",
       title: json["title"] as String? ?? "Know About Me\nIn Detail",
       summary: json["summary"] as String? ??
-          "Hey again! I'm Faruq, a mobile engineer with 5 years in React Native, Flutter, and Kotlin, and lately the Go APIs behind the apps too. "
-              "I like building apps that keep working offline: my favorite is COIP, which 3+ mining companies use for up to 100 inspections a day "
-              "at sites with no signal. Right now I'm at REDDOG, building POS features from the Go API to the React screen.",
+          "Hey again! I'm Faruq. For 5 years I've built mobile apps people rely on in the field, in React Native, Flutter, and Kotlin, "
+              "and lately the Go APIs behind them too. My favorite is COIP: I built it from scratch for United Tractors, and 3+ mining companies "
+              "now run up to 100 inspections a day on it, signal or not. Today I'm at REDDOG, shipping POS features from the Go API to the React screen.",
       location: json["location"] as String? ?? "Jakarta, Indonesia",
       phone: json["phone"] as String? ?? "+62 857-1356-1437",
       email: json["email"] as String? ?? "suhaili.faruq01@gmail.com",
